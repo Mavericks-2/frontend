@@ -1,8 +1,11 @@
 import './App.css';
+import PlanogramApp from './components/PlanogramApp';
 
 function App() {
   return (
-    <div></div>
+    <div>
+      <PlanogramApp />
+    </div>
   );
 }
 
