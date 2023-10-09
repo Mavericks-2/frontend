@@ -1,0 +1,52 @@
+.PlanogramSquare {
+    width: 75%;
+    border-radius: 10px;
+    box-shadow: 6px 6px 30px rgba(0, 0, 0, 0.15);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    margin-top: 20px;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.PlanogramSquare h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.PlanogramSquare img {
+    width: 50%;
+    border-radius: 10px;
+}
+
+.PlanogramSquare > a {
+    margin-top: 1rem;
+    text-decoration: none;
+}
+
+.PlanogramSquare > a > button {
+    width: 100%;
+    background: #FF6B00;
+    border-radius: 30px;
+    padding: 0.5rem 2rem;
+    border: none;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(270deg, #E21C2A 0%, #F0A929 100%);
+}
+
+.PlanogramSquare > a > button > h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}

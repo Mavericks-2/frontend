@@ -1,0 +1,64 @@
+.PlanogramForms {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.InputBlock {
+  display: flex;
+  margin: 1rem 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.PlanogramForms > a > button, .finalButtons > a > button {
+    width: 100%;
+    background: #FF6B00;
+    border-radius: 30px;
+    padding: 0.5rem 2rem;
+    color: white;
+    border: none;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(270deg, #E21C2A 0%, #F0A929 100%);
+}
+
+.PlanogramForms > a > button > h2, .finalButtons > a > button > h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+
+.PlanogramForms > a {
+  text-decoration: none;
+}
+
+.finalButtons{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.PlanogramForms > a.shortButton {
+  width: fit-content;
+}
+
+.InputBlock > input {
+    width: 50%;
+    height: 2.25rem;
+    border-radius: 5px;
+    border: none;
+    background-color: orange;
+  }
+
+.InputBlock > p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+}
+
+
