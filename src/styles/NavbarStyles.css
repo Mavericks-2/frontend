@@ -1,0 +1,25 @@
+.Navbar {
+font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 6px solid red;
+}
+
+.Navbar > a {
+    display: flex;
+    align-items: center;
+}
+
+.Navbar > .Title {
+    margin: 10px;
+  }
+
+.Navbar > .OxxoLogoLink > .OxxoLogo {
+  width: 80px;
+}
+
+.Navbar > .UserLink > .User {
+  width: 40px;
+}
