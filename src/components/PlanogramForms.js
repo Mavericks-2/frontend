@@ -1,36 +1,35 @@
 import PlanogramFormsStyles from "../styles/PlanogramFormsStyles.css";
 import { useState } from "react";
 
-function PlanogramForms() {
-  const [showColumnConfig, setShowColumnConfig] = useState(false);
-  const [numRows, setNumRows] = useState(0);
+function PlanogramForms(props) {
 
   return (
     <div className="PlanogramForms">
       <div className="InputBlock">
         <p>Número de Estantes</p>
         <input
-          type="text"
+          type="number"
+          style={{textAlign: 'center'}}
           onChange={(event) => {
-            setNumRows(event.target.value);
+            props.setRows(event.target.value);
           }}
+          value={props.rows}
         />
       </div>
       <a
-        href="#"
         onClick={() => {
-          setShowColumnConfig(true);
+          props.setIsRowsConfigured(true);
         }}
       >
         <button>
           <h2>Acomodar estantes para continuar</h2>
         </button>
       </a>
-      {showColumnConfig ? (
+      {props.isRowsConfigured ? (
         <>
-          {Array.from({ length: parseInt(numRows) }, (_, index) => (
+          {Array.from({ length: parseInt(props.rows) }, (_, index) => (
             <div className="InputBlock" key={index}>
-              <p>Número de productos en columna #{index + 1}</p>
+              <p>Número de productos en repisa #{index + 1}</p>
               <input type="text" />
             </div>
           ))}
@@ -41,7 +40,10 @@ function PlanogramForms() {
           </a>
           <div className="finalButtons">
             <a className="shortButton">
-              <button >
+              <button onClick={()=>{
+                props.setRows(0)
+                props.setIsRowsConfigured(false)
+                }}>
                 <h2>Reiniciar</h2>
               </button>
             </a>
