@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import PlanogramSquareStyles from "../styles/PlanogramSquareStyles.css";
 import Gondola from "../assets/gondola.jpeg";
 import PlanogramForms from "./PlanogramForms";
@@ -8,14 +8,21 @@ function PlanogramSquare() {
   const [showForm, setShowForm] = useState(false);
   const [rows, setRows] = useState(0);
   const [isRowsConfigured, setIsRowsConfigured] = useState(false);
+  const [columnProducts, setColumnProducts] = useState([]);
+
+  useEffect(() => {
+    if (rows > 0) {
+      setColumnProducts(Array.from({ length: parseInt(rows) }, (_, index) => 0));
+    }
+  }, [rows]);
 
   return (
     <div className="PlanogramSquare">
       <h1>¿Estás listo para subir la configuración?</h1>
       {showForm ? (
         <Fragment>
-          <PlanogramConfigurator rows={rows} isRowsConfigured={isRowsConfigured} />
-          <PlanogramForms rows={rows} setRows={setRows} isRowsConfigured={isRowsConfigured} setIsRowsConfigured={setIsRowsConfigured} />
+          <PlanogramConfigurator rows={rows} isRowsConfigured={isRowsConfigured} columnProducts={columnProducts} />
+          <PlanogramForms rows={rows} setRows={setRows} isRowsConfigured={isRowsConfigured} setIsRowsConfigured={setIsRowsConfigured} columnProducts={columnProducts} setColumnProducts={setColumnProducts} />
         </Fragment>
       ) : (
         <Fragment>
