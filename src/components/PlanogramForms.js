@@ -2,6 +2,15 @@ import PlanogramFormsStyles from "../styles/PlanogramFormsStyles.css";
 import { useState } from "react";
 
 function PlanogramForms(props) {
+
+  const handleContinueClick = () => {
+    console.log("Rectangles: ", props.rectangles);
+
+    // Do something with the rectangles state, for example, send it to an API or parent component.
+    // You can pass `rectangles` to the parent component or an API call here.
+    // Example: props.sendRectangles(rectangles);
+  };
+
   return (
     <div className="PlanogramForms">
       <div className="InputBlock">
@@ -38,7 +47,7 @@ function PlanogramForms(props) {
                 style={{ textAlign: "center" }}
                 onChange={(e) => {
                   let newColumnProducts = [...props.columnProducts];
-                  newColumnProducts[index] = parseInt(e.target.value) ;
+                  newColumnProducts[index] = parseInt(e.target.value);
                   props.setColumnProducts(newColumnProducts);
                 }}
                 value={props.columnProducts[index]}
@@ -58,7 +67,12 @@ function PlanogramForms(props) {
                 <h2>Reiniciar</h2>
               </button>
             </a>
-            <a className="shortButton">
+            <a
+              className="shortButton"
+              onClick={() => {
+                handleContinueClick();
+              }}
+            >
               <button>
                 <h2>Continuar</h2>
               </button>

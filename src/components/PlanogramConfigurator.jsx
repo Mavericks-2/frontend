@@ -1,15 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
 import Gondola from "../assets/gondola.jpeg";
+let prev, columnLines;
+
 
 function PlanogramConfigurator(props) {
   const canvasRef = useRef(null);
   const [context, setContext] = useState(null);
   const [canvas, setCanvas] = useState(null);
-  const [rowsLines, setRowsLines] = useState([]);
+  const [RowsDrawings, setRowsDrawings] = useState([]);
   const [columnDrawings, setColumnDrawings] = useState([]);
   let isDrawing = false;
   let selectedLine = null;
-  let prev, columnLines;
   let linePositions = [];
 
   useEffect(() => {
@@ -29,10 +30,10 @@ function PlanogramConfigurator(props) {
   }, [props.rows, canvas, context]);
 
   useEffect(() => {
-    if (rowsLines && context) {
+    if (RowsDrawings && context) {
       drawRows();
     }
-  }, [rowsLines]);
+  }, [RowsDrawings]);
 
   useEffect(() => {
     if (props.isRowsConfigured) {
@@ -52,19 +53,19 @@ function PlanogramConfigurator(props) {
     let rowHeight = canvas.height / (rows + 1);
 
     // Se define la posición inicial de cada fila
-    let rowLines = new Array(rows).fill().map((_, index) => ({
+    let rowDrawings = new Array(rows).fill().map((_, index) => ({
       x: 0,
       y: (index + 1) * rowHeight,
       width: canvas.width,
       height: 0,
     }));
 
-    setRowsLines(rowLines);
+    setRowsDrawings(rowDrawings);
   };
 
   const initializeColumns = () => {
     // Se obtienen las coordenadas 'y' de las filas
-    let rowYPositions = rowsLines.map((line) => line.y);
+    let rowYPositions = RowsDrawings.map((line) => line.y);
     rowYPositions.unshift(0);
     rowYPositions.push(canvas.height);
     rowYPositions.sort((a, b) => a - b);
@@ -108,7 +109,7 @@ function PlanogramConfigurator(props) {
     // Dibujar las líneas de las filas y guardar sus posiciones
     context.strokeStyle = "red";
     context.lineWidth = 5;
-    rowsLines.forEach((line) => {
+    RowsDrawings.forEach((line) => {
       context.beginPath();
       context.moveTo(line.x, line.y);
       context.lineTo(line.x + line.width, line.y);
@@ -117,6 +118,7 @@ function PlanogramConfigurator(props) {
   };
 
   const drawColumns = () => {
+    console.log("columnLines1", columnLines)
     linePositions.length = 0; // Clear the linePositions array
     columnLines = [];
 
@@ -125,7 +127,7 @@ function PlanogramConfigurator(props) {
     // Draw row lines and save positions
     context.strokeStyle = "red";
     context.lineWidth = 5;
-    rowsLines.forEach((line) => {
+    RowsDrawings.forEach((line) => {
       context.beginPath();
       context.moveTo(line.x, line.y);
       context.lineTo(line.x + line.width, line.y);
@@ -153,7 +155,6 @@ function PlanogramConfigurator(props) {
 
       // Remove old line position from linePositions (if exists)
       linePositions = linePositions.filter((pos) => pos !== line);
-      columnLines = columnLines.filter((pos) => pos !== line);
 
       linePositions.push({
         x1: line.x,
@@ -171,6 +172,8 @@ function PlanogramConfigurator(props) {
         row: line.row,
       });
     });
+    console.log("columnLines2", columnLines)
+
   };
 
   const onMouseDownGeneral = (e) => {
@@ -179,10 +182,10 @@ function PlanogramConfigurator(props) {
 
     if (!props.isRowsConfigured) {
       // Check for row lines
-      for (let i = 0; i < rowsLines.length; i++) {
-        if (Math.abs(mouseY - rowsLines[i].y) < 10) {
+      for (let i = 0; i < RowsDrawings.length; i++) {
+        if (Math.abs(mouseY - RowsDrawings[i].y) < 10) {
           isDrawing = true;
-          selectedLine = rowsLines[i];
+          selectedLine = RowsDrawings[i];
           break;
         }
       }
@@ -226,6 +229,47 @@ function PlanogramConfigurator(props) {
   const onMouseUpGeneral = (e) => {
     isDrawing = false;
     selectedLine = null;
+
+    if(props.isRowsConfigured) {
+      props.setRectangles(convertLinesToRectangles())
+    }
+  };
+
+  const convertLinesToRectangles = () => {
+    let rectangles = [];
+    let prev = { x1: 0, y1: 0 };
+    let row = 0;
+    let column = 0;
+
+    for (let i = 0; i < columnLines.length; i++) {
+      if (columnLines[i].row !== row) {
+        // create a rectangle
+        rectangles.push({
+          x: prev.x1,
+          y: prev.y1,
+          width: canvas.width - prev.x1,
+          height: prev.y2 - prev.y1,
+        });
+        prev = { x1: 0, y1: columnLines[i].y1 };
+      }
+      // create a rectangle
+      rectangles.push({
+        x: prev.x1,
+        y: prev.y1,
+        width: columnLines[i].x1 - prev.x1,
+        height: columnLines[i].y2 - prev.y1,
+      });
+      prev = columnLines[i];
+      row = columnLines[i].row;
+    }
+    rectangles.push({
+      x: prev.x1,
+      y: prev.y1,
+      width: canvas.width - prev.x1,
+      height: canvas.height - prev.y1,
+    });
+
+    return rectangles;
   };
 
   return (

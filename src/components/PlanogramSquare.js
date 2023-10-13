@@ -9,6 +9,7 @@ function PlanogramSquare() {
   const [rows, setRows] = useState(0);
   const [isRowsConfigured, setIsRowsConfigured] = useState(false);
   const [columnProducts, setColumnProducts] = useState([]);
+  const [rectangles, setRectangles] = useState({});
 
   useEffect(() => {
     if (rows > 0) {
@@ -21,8 +22,8 @@ function PlanogramSquare() {
       <h1>¿Estás listo para subir la configuración?</h1>
       {showForm ? (
         <Fragment>
-          <PlanogramConfigurator rows={rows} isRowsConfigured={isRowsConfigured} columnProducts={columnProducts} />
-          <PlanogramForms rows={rows} setRows={setRows} isRowsConfigured={isRowsConfigured} setIsRowsConfigured={setIsRowsConfigured} columnProducts={columnProducts} setColumnProducts={setColumnProducts} />
+          <PlanogramConfigurator rows={rows} isRowsConfigured={isRowsConfigured} columnProducts={columnProducts} setRectangles={setRectangles} />
+          <PlanogramForms rows={rows} setRows={setRows} isRowsConfigured={isRowsConfigured} setIsRowsConfigured={setIsRowsConfigured} columnProducts={columnProducts} setColumnProducts={setColumnProducts} rectangles={rectangles}/>
         </Fragment>
       ) : (
         <Fragment>
