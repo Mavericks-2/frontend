@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import Gondola from "../assets/gondola.jpeg";
 let prev, columnLines;
 
-
 function PlanogramConfigurator(props) {
   const canvasRef = useRef(null);
   const [context, setContext] = useState(null);
@@ -76,13 +75,13 @@ function PlanogramConfigurator(props) {
 
       for (let i = 0; i <= props.rows; i++) {
         // Se define el ancho de cada columna
-        let columnWidth = canvas.width / numColumnsByRow[i] - 1;
+        let columnWidth = canvas.width / numColumnsByRow[i];
 
         // Se define la posición previa de la columna
         prev = 0;
 
         for (let j = 0; j < numColumnsByRow[i] - 1; j++) {
-          let startX = (0.5 + j) * columnWidth; // TODO: Revisar lógica
+          let startX = (j+1) * columnWidth;
           let startY = rowYPositions[i];
           let endY = rowYPositions[i + 1];
 
