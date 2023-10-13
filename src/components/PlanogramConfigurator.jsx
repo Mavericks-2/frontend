@@ -118,7 +118,6 @@ function PlanogramConfigurator(props) {
   };
 
   const drawColumns = () => {
-    console.log("columnLines1", columnLines)
     linePositions.length = 0; // Clear the linePositions array
     columnLines = [];
 
@@ -172,8 +171,6 @@ function PlanogramConfigurator(props) {
         row: line.row,
       });
     });
-    console.log("columnLines2", columnLines)
-
   };
 
   const onMouseDownGeneral = (e) => {
