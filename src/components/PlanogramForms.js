@@ -1,14 +1,24 @@
 import PlanogramFormsStyles from "../styles/PlanogramFormsStyles.css";
 import { useState } from "react";
+import { postPlanogram } from "../services/PlanogramService";
 
 function PlanogramForms(props) {
 
-  const handleContinueClick = () => {
-    console.log("Rectangles: ", props.rectangles);
+  
+  const handleContinueClick = async () => {
+    let planogramData = {
+      url_imagen: "ejemplo-de-enlace-de-imagen",
+      coordenadas: {coordinates: props.rectangles},
+      id_manager: "ejemplo-de-id-manager",
+    };
+    console.log("Planograma: ", planogramData)
+    const planogramResponse = await postPlanogram(planogramData);
 
-    // Do something with the rectangles state, for example, send it to an API or parent component.
-    // You can pass `rectangles` to the parent component or an API call here.
-    // Example: props.sendRectangles(rectangles);
+    if (planogramResponse === "ok") {
+      console.log("Planograma creado exitosamente");
+    } else {
+      console.log("Error al crear planograma");
+    }
   };
 
   return (
