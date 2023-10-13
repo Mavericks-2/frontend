@@ -19,10 +19,6 @@
     text-align: center;
 }
 
-.PlanogramSquare img {
-    width: 50%;
-    border-radius: 10px;
-}
 
 .PlanogramSquare > a {
     margin-top: 1rem;
