@@ -274,7 +274,7 @@ function PlanogramConfigurator(props) {
       width="500"
       height="250"
       ref={canvasRef}
-      style={{ backgroundImage: `url(${Gondola})`, backgroundSize: "cover" }}
+      style={{ backgroundImage: `url(${props.image || Gondola})`, backgroundSize: "cover" }}
       onMouseDown={onMouseDownGeneral}
       onMouseMove={onMouseMoveGeneral}
       onMouseUp={onMouseUpGeneral}

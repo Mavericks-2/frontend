@@ -4,8 +4,10 @@ import Navbar from "../components/Navbar";
 function UploadPlanogramPage() {
   return (
     <>
+
       <Navbar />
       <FileUpload />
+
     </>
   );
 }

@@ -1,18 +1,26 @@
-import React, { Fragment, createContext } from 'react';
-import { Navigate, Route, Routes } from "react-router-dom";
-import UploadPlanogramPage from './UploadPlanogramPage';
+// RoutesPage.js
 
-export const UserContext = createContext();
+import React, { Fragment, createContext } from "react";
+import { Routes, Route } from "react-router-dom";
+import UploadPlanogramPage from "./UploadPlanogramPage";
+import PlanogramModifierPage from "./PlanogramModifierPage";
+import Navbar from "../components/Navbar";
+import { ContextProvider } from "../providers/ContextProvider";
+
+
+export const Context = createContext();
 
 function RoutesPage() {
   return (
     <Fragment>
-          <Routes>
-              <Route path="/" element={<UploadPlanogramPage />}/>
-          </Routes>
+      <ContextProvider>
+        <Routes>
+          <Route path="/" element={<UploadPlanogramPage />} />
+          <Route path="/planogram" element={<PlanogramModifierPage />} />
+        </Routes>
+      </ContextProvider>
     </Fragment>
-    
-  )
+  );
 }
 
 export default RoutesPage;

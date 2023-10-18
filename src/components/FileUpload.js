@@ -1,10 +1,16 @@
 import FileUploadStyles from "../styles/FileUploadStyles.css";
-import { Pane, FileUploader, FileCard } from "evergreen-ui";
-import React, { useState, useCallback } from "react";
+import { Pane, FileUploader, FileCard, Button } from "evergreen-ui";
+import React, { useState, useCallback, useContext } from "react";
+import { Context } from "../pages/RoutesPages";
+import { useNavigate, Link } from "react-router-dom"; 
 
 function FileUpload() {
+  const navigate = useNavigate();
+
+  const { setUploadedFile } = useContext(Context);
   const [files, setFiles] = useState([]);
   const [fileRejections, setFileRejections] = useState([]);
+
   const handleChange = useCallback((files) => setFiles([files[0]]), []);
   const handleRejected = useCallback(
     (fileRejections) => setFileRejections([fileRejections[0]]),
@@ -14,6 +20,14 @@ function FileUpload() {
     setFiles([]);
     setFileRejections([]);
   }, []);
+
+  const handleUpload = () => {
+    if (files.length > 0) {
+      setUploadedFile(files[0]);
+      // Route to the next page
+      navigate("/planogram");
+    }
+  };
   return (
     <div className="FileUpload">
       <h1 className="Title">Agrega la nueva configuración de planograma.</h1>
@@ -22,7 +36,7 @@ function FileUpload() {
           label="Cargar archivo "
           description="Solo se permite un archivo. El archivo debe ser menor a 50MB."
           maxSizeInBytes={50 * 1024 ** 2}
-          maxFiles={1}
+          maxFiles={2}
           onChange={handleChange}
           onRejected={handleRejected}
           renderFile={(file) => {
@@ -46,6 +60,14 @@ function FileUpload() {
           values={files}
         />
       </Pane>
+      <Button
+        onClick={handleUpload}
+        appearance="primary"
+        intent="success"
+        className="success-button"
+      >
+        Guardar
+      </Button>
     </div>
   );
 }
