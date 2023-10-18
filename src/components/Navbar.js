@@ -1,11 +1,13 @@
 import OxxoLogo from "../assets/oxxo_logo.png";
 import User from "../assets/user.png";
 import NavbarStyles from "../styles/NavbarStyles.css";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
   return (
     <div className="Navbar">
-      <a href="#" className="OxxoLogoLink">
+      <a href="/" className="OxxoLogoLink">
         <img className="OxxoLogo" src={OxxoLogo} alt="Oxxo Logo" />
       </a>
       <h1 className="Title">Administrador</h1>

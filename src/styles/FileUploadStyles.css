@@ -13,10 +13,10 @@
 }
 
 .FileUpload > .Subtitle {
-    width: 70%;
-    font-size: 1.25rem;
-    text-align: center;
-  }
+  width: 70%;
+  font-size: 1.25rem;
+  text-align: center;
+}
 
 .ub-box-szg_border-box {
   width: 100%;
@@ -27,21 +27,43 @@ div.FileUpload > div > div > div:nth-child(1) {
   width: 70%;
   margin-left: auto;
   margin-right: auto;
-  height: 350px;
+  height: 250px;
+  margin-bottom: 2rem;
 }
 
 .FileUpload > div > div > div.ub-mt_16px.ub-box-szg_border-box > div > div {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3.5rem;
 }
 
-.FileUpload > div > div > div.ub-mt_16px.ub-box-szg_border-box > div > div > div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.FileUpload
+  > div
+  > div
+  > div.ub-mt_16px.ub-box-szg_border-box
+  > div
+  > div
+  > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#root > div > div.FileUpload > div > div > div.ub-mt_16px.ub-box-szg_border-box > div > div > div > div.ub-ml_16px.ub-mr_8px.ub-box-szg_border-box {
-    max-width: 45px;
+#root
+  > div
+  > div.FileUpload
+  > div
+  > div
+  > div.ub-mt_16px.ub-box-szg_border-box
+  > div
+  > div
+  > div
+  > div.ub-ml_16px.ub-mr_8px.ub-box-szg_border-box {
+  max-width: 45px;
+}
+
+.success-button {
+  margin-top: 2rem;
+  width: 100px;
 }
