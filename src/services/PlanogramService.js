@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL, FLASK_BASE_URL } from "../config";
 
 export async function postPlanogram(planogramData) {
   const bodyPlanogramData = {
@@ -20,4 +20,40 @@ export async function postPlanogram(planogramData) {
     return data.message;
   });
   return validatePlanogram;
+}
+
+export async function postPlanogramModel(planogramData) {
+  const blob = await fetch(planogramData.imagen).then((r) => r.blob());
+  let reader = new FileReader();
+
+  reader.readAsDataURL(blob);
+  reader.onload = () => {
+    let imagenbase4 = reader.result;
+
+    let imagenFinalBase64 = imagenbase4.split(",")[1];
+
+    const bodyPlanogramData = {
+      imagen: imagenFinalBase64,
+    };
+    console.log("bodyPlanogramData: ", bodyPlanogramData);
+
+    fetch(`${FLASK_BASE_URL}/uploadImage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyPlanogramData),
+    })
+      .then(async (response) => {
+        const data = await response.json();
+        return data.message;
+      })
+      .catch((error) => {
+        console.error("Error uploading image:", error);
+      });
+  };
+
+  reader.onerror = (error) => {
+    console.log("Error8: ", error);
+  };
 }
