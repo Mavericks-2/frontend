@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import Gondola from "../assets/gondola.jpeg";
+
 let prev, columnLines;
 
 function PlanogramConfigurator(props) {
@@ -46,6 +47,12 @@ function PlanogramConfigurator(props) {
     }
   }, [columnDrawings]);
 
+  useEffect(() => {
+    if (props.finished) {
+      props.setRectangles(convertLinesToRectangles());
+    }
+  }, [props.finished]);
+  
   const initializeRows = (rows) => {
     rows = rows - 1;
     // Se define la altura inicial de cada fila
@@ -225,10 +232,6 @@ function PlanogramConfigurator(props) {
   const onMouseUpGeneral = (e) => {
     isDrawing = false;
     selectedLine = null;
-
-    if(props.isRowsConfigured) {
-      props.setRectangles(convertLinesToRectangles())
-    }
   };
 
   const convertLinesToRectangles = () => {
@@ -274,7 +277,7 @@ function PlanogramConfigurator(props) {
       width="500"
       height="250"
       ref={canvasRef}
-      style={{ backgroundImage: `url(${props.image || Gondola})`, backgroundSize: "cover" }}
+      style={{background: "transparent"}}
       onMouseDown={onMouseDownGeneral}
       onMouseMove={onMouseMoveGeneral}
       onMouseUp={onMouseUpGeneral}
