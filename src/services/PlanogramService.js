@@ -22,6 +22,26 @@ export async function postPlanogram(planogramData) {
   return validatePlanogram;
 }
 
+export async function postPlanogramProducts(planogramData) {
+  const bodyPlanogramData = {
+    coordenadas: planogramData.coordenadas,
+  };
+  const validatePlanogramProducts = await fetch(
+    `${FLASK_BASE_URL}/classifyImage`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyPlanogramData),
+    }
+  ).then(async (response) => {
+    const data = await response.json();
+    return data.products;
+  });
+  return validatePlanogramProducts;
+}
+
 export async function postPlanogramModel(planogramData) {
   const blob = await fetch(planogramData.imagen).then((r) => r.blob());
   let reader = new FileReader();
