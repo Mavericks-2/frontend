@@ -1,9 +1,16 @@
 import PlanogramFormsStyles from "../styles/PlanogramFormsStyles.css";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { postPlanogram } from "../services/PlanogramService";
-import { postPlanogramModel, postPlanogramProducts } from "../services/PlanogramService";
+import {
+  postPlanogramModel,
+  postPlanogramProducts,
+  postPlanogramImage,
+} from "../services/PlanogramService";
+import { Context } from "../pages/RoutesPages";
 
 function PlanogramForms(props) {
+  const { linePositionsContext } = useContext(Context);
+
   useEffect(() => {
     if (props.rectangles.length > 0) {
       post();
@@ -11,15 +18,23 @@ function PlanogramForms(props) {
   }, [props.rectangles]);
 
   const post = async () => {
-    
-    let planogramData = {
-      url_imagen: "ejemplo-de-enlace-de-imagen",
+    await postPlanogramModel({ imagen: props.imagen });
+    const matriz_productos = await postPlanogramProducts({
       coordenadas: { coordenadas: props.rectangles },
-      id_manager: "ejemplo-de-id-manager",
+    });
+    const url_imagen = await postPlanogramImage({
+      imagen: props.imagen,
+      type: props.imageType,
+    });
+
+    const planogramData = {
+      url_imagen: url_imagen, // Se recibe nulo debido al payload too large
+      coordenadas: {"coordenadas": props.rectangles},
+      id_manager: "440e8400-e29b-41d4-a716-446655440000",
+      matriz_productos: {"productos": matriz_productos},
+      lineas: linePositionsContext, // No se obtiene bien
     };
 
-    await postPlanogramModel({"imagen": props.imagen});
-    const planogramProducts = await postPlanogramProducts(planogramData);
     const planogramResponse = await postPlanogram(planogramData);
 
     if (planogramResponse === "ok") {

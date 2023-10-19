@@ -1,5 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import Gondola from "../assets/gondola.jpeg";
+import { Context } from "../pages/RoutesPages";
 
 let prev, columnLines;
 
@@ -9,6 +10,7 @@ function PlanogramConfigurator(props) {
   const [canvas, setCanvas] = useState(null);
   const [RowsDrawings, setRowsDrawings] = useState([]);
   const [columnDrawings, setColumnDrawings] = useState([]);
+  const { setLinePositionsContext } = useContext(Context);
   let isDrawing = false;
   let selectedLine = null;
   let linePositions = [];
@@ -50,6 +52,7 @@ function PlanogramConfigurator(props) {
   useEffect(() => {
     if (props.finished) {
       props.setRectangles(convertLinesToRectangles());
+      setLinePositionsContext(linePositions);
     }
   }, [props.finished]);
   

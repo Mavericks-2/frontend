@@ -2,9 +2,12 @@ import { API_BASE_URL, FLASK_BASE_URL } from "../config";
 
 export async function postPlanogram(planogramData) {
   const bodyPlanogramData = {
+    id_planogram: planogramData.id_planogram,
     url_imagen: planogramData.url_imagen,
     coordenadas: planogramData.coordenadas,
     id_manager: planogramData.id_manager,
+    matriz_productos: planogramData.matriz_productos,
+    lineas: planogramData.lineas,
   };
   const validatePlanogram = await fetch(
     `${API_BASE_URL}/planogram/postPlanogramConfig`,
@@ -79,7 +82,6 @@ export async function postPlanogramModel(planogramData) {
   };
 }
 
-
 export async function postPlanogramImage(planogramData) {
   const blob = await fetch(planogramData.imagen).then((r) => r.blob());
   let reader = new FileReader();
@@ -91,9 +93,9 @@ export async function postPlanogramImage(planogramData) {
     let imagenFinalBase64 = imagenbase4.split(",")[1];
 
     const bodyPlanogramData = {
-      imagen: imagenFinalBase64,
+      base_64_image: imagenFinalBase64,
+      type: planogramData.type,
     };
-    console.log("bodyPlanogramData: ", bodyPlanogramData);
 
     fetch(`${API_BASE_URL}/planogram/postPlanogramToCloud`, {
       method: "POST",
@@ -104,7 +106,7 @@ export async function postPlanogramImage(planogramData) {
     })
       .then(async (response) => {
         const data = await response.json();
-        return data.message;
+        return data.url;
       })
       .catch((error) => {
         console.error("Error uploading image:", error);

@@ -67,6 +67,7 @@ function PlanogramSquare() {
             rectangles={rectangles}
             setFinished={setFinished}
             imagen={uploadedFile ? URL.createObjectURL(uploadedFile) : Gondola}
+            imageType={uploadedFile ? uploadedFile.type : "image/jpeg"}
           />
         </Fragment>
       ) : (
