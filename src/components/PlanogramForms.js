@@ -1,6 +1,7 @@
 import PlanogramFormsStyles from "../styles/PlanogramFormsStyles.css";
 import { useEffect } from "react";
 import { postPlanogram } from "../services/PlanogramService";
+import { postPlanogramModel, postPlanogramProducts } from "../services/PlanogramService";
 
 function PlanogramForms(props) {
   useEffect(() => {
@@ -10,11 +11,15 @@ function PlanogramForms(props) {
   }, [props.rectangles]);
 
   const post = async () => {
+    
     let planogramData = {
       url_imagen: "ejemplo-de-enlace-de-imagen",
-      coordenadas: { coordinates: props.rectangles },
+      coordenadas: { coordenadas: props.rectangles },
       id_manager: "ejemplo-de-id-manager",
     };
+
+    await postPlanogramModel({"imagen": props.imagen});
+    const planogramProducts = await postPlanogramProducts(planogramData);
     const planogramResponse = await postPlanogram(planogramData);
 
     if (planogramResponse === "ok") {

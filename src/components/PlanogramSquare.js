@@ -66,6 +66,7 @@ function PlanogramSquare() {
             setColumnProducts={setColumnProducts}
             rectangles={rectangles}
             setFinished={setFinished}
+            imagen={uploadedFile ? URL.createObjectURL(uploadedFile) : Gondola}
           />
         </Fragment>
       ) : (
