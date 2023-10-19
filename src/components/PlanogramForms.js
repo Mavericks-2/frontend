@@ -28,7 +28,7 @@ function PlanogramForms(props) {
     });
 
     const planogramData = {
-      url_imagen: url_imagen, // Se recibe nulo debido al payload too large
+      url_imagen: url_imagen,
       coordenadas: {"coordenadas": props.rectangles},
       id_manager: "440e8400-e29b-41d4-a716-446655440000",
       matriz_productos: {"productos": matriz_productos},

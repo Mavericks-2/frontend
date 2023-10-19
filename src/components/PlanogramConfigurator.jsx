@@ -51,8 +51,8 @@ function PlanogramConfigurator(props) {
 
   useEffect(() => {
     if (props.finished) {
-      props.setRectangles(convertLinesToRectangles());
       setLinePositionsContext(linePositions);
+      props.setRectangles(convertLinesToRectangles());
     }
   }, [props.finished]);
   
@@ -127,7 +127,6 @@ function PlanogramConfigurator(props) {
   };
 
   const drawColumns = () => {
-    linePositions.length = 0; // Clear the linePositions array
     columnLines = [];
 
     context.clearRect(0, 0, canvas.width, canvas.height);
