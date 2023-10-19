@@ -1,17 +1,20 @@
 import PlanogramFormsStyles from "../styles/PlanogramFormsStyles.css";
-import { useState } from "react";
+import { useEffect } from "react";
 import { postPlanogram } from "../services/PlanogramService";
 
 function PlanogramForms(props) {
+  useEffect(() => {
+    if (props.rectangles.length > 0) {
+      post();
+    }
+  }, [props.rectangles]);
 
-  
-  const handleContinueClick = async () => {
+  const post = async () => {
     let planogramData = {
       url_imagen: "ejemplo-de-enlace-de-imagen",
-      coordenadas: {coordinates: props.rectangles},
+      coordenadas: { coordinates: props.rectangles },
       id_manager: "ejemplo-de-id-manager",
     };
-    console.log("Planograma: ", planogramData)
     const planogramResponse = await postPlanogram(planogramData);
 
     if (planogramResponse === "ok") {
@@ -19,6 +22,10 @@ function PlanogramForms(props) {
     } else {
       console.log("Error al crear planograma");
     }
+  };
+
+  const handleContinueClick = async () => {
+    props.setFinished(true);
   };
 
   return (

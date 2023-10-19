@@ -1,11 +1,15 @@
-import { Fragment, useEffect, useState, useContext, createContext } from "react";
+import {
+  Fragment,
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+} from "react";
 import PlanogramSquareStyles from "../styles/PlanogramSquareStyles.css";
 import Gondola from "../assets/gondola.jpeg";
 import PlanogramForms from "./PlanogramForms";
 import PlanogramConfigurator from "./PlanogramConfigurator";
 import { Context } from "../pages/RoutesPages";
-
-import Oxxo from "../assets/oxxo_logo.png";
 
 function PlanogramSquare() {
   const { uploadedFile } = useContext(Context);
@@ -13,7 +17,15 @@ function PlanogramSquare() {
   const [rows, setRows] = useState(0);
   const [isRowsConfigured, setIsRowsConfigured] = useState(false);
   const [columnProducts, setColumnProducts] = useState([]);
-  const [rectangles, setRectangles] = useState({});
+  const [rectangles, setRectangles] = useState([]);
+  const [finished, setFinished] = useState(false);
+  const imageDiv = useRef(null);
+
+  useEffect(() => {
+    if (imageDiv.current){
+      imageDiv.current.style.backgroundImage = `url(${uploadedFile ? URL.createObjectURL(uploadedFile) : Gondola})`;
+    }
+  }, [uploadedFile]);
 
   useEffect(() => {
     if (rows > 0) {
@@ -26,15 +38,25 @@ function PlanogramSquare() {
   return (
     <div className="PlanogramSquare">
       <h1>¿Estás listo para subir la configuración?</h1>
+      <div
+        style={{
+          width: 500,
+          height: 250,
+          backgroundSize: "cover",
+        }}
+        ref={imageDiv}
+      >
+        <PlanogramConfigurator
+          rows={rows}
+          isRowsConfigured={isRowsConfigured}
+          columnProducts={columnProducts}
+          setRectangles={setRectangles}
+          finished={finished}
+          uploadedFile={uploadedFile}
+        />
+      </div>
       {showForm ? (
         <Fragment>
-          <PlanogramConfigurator
-            rows={rows}
-            isRowsConfigured={isRowsConfigured}
-            columnProducts={columnProducts}
-            setRectangles={setRectangles}
-            image = {URL.createObjectURL(uploadedFile)}
-          />
           <PlanogramForms
             rows={rows}
             setRows={setRows}
@@ -43,29 +65,11 @@ function PlanogramSquare() {
             columnProducts={columnProducts}
             setColumnProducts={setColumnProducts}
             rectangles={rectangles}
+            setFinished={setFinished}
           />
         </Fragment>
       ) : (
         <Fragment>
-          {uploadedFile ? ( // Check if uploadedFile exists
-            <div
-              style={{
-                width: 500,
-                height: 250,
-                backgroundImage: `url(${URL.createObjectURL(uploadedFile)})`,
-                backgroundSize: "cover",
-              }}
-            />
-          ) : (
-            <div
-              style={{
-                width: 500,
-                height: 250,
-                backgroundImage: `url(${Gondola})`,
-                backgroundSize: "cover",
-              }}
-            />
-          )}
           <a
             onClick={() => {
               setShowForm(true);
