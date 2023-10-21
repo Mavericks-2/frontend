@@ -10,7 +10,7 @@ function PlanogramConfigurator(props) {
   const [canvas, setCanvas] = useState(null);
   const [RowsDrawings, setRowsDrawings] = useState([]);
   const [columnDrawings, setColumnDrawings] = useState([]);
-  const { setLinePositionsContext } = useContext(Context);
+  const { asyncSetLinePositionsContext } = useContext(Context);
   let isDrawing = false;
   let selectedLine = null;
   let linePositions = [];
@@ -51,7 +51,6 @@ function PlanogramConfigurator(props) {
 
   useEffect(() => {
     if (props.finished) {
-      setLinePositionsContext(linePositions);
       props.setRectangles(convertLinesToRectangles());
     }
   }, [props.finished]);
@@ -179,6 +178,7 @@ function PlanogramConfigurator(props) {
         row: line.row,
       });
     });
+    asyncSetLinePositionsContext(linePositions);
   };
 
   const onMouseDownGeneral = (e) => {
