@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import Gondola from "../assets/gondola.jpeg";
 import { Context } from "../pages/RoutesPages";
 
-let prev, columnLines;
+let prev, columnLines, linePositions;
 
 function PlanogramConfigurator(props) {
   const canvasRef = useRef(null);
@@ -10,10 +10,10 @@ function PlanogramConfigurator(props) {
   const [canvas, setCanvas] = useState(null);
   const [RowsDrawings, setRowsDrawings] = useState([]);
   const [columnDrawings, setColumnDrawings] = useState([]);
-  const { asyncSetLinePositionsContext } = useContext(Context);
+  const { setLinePositionsContext }  = useContext(Context);
   let isDrawing = false;
   let selectedLine = null;
-  let linePositions = [];
+  
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -51,6 +51,7 @@ function PlanogramConfigurator(props) {
 
   useEffect(() => {
     if (props.finished) {
+      setLinePositionsContext(linePositions);
       props.setRectangles(convertLinesToRectangles());
     }
   }, [props.finished]);
@@ -127,6 +128,7 @@ function PlanogramConfigurator(props) {
 
   const drawColumns = () => {
     columnLines = [];
+    linePositions = [];
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -178,7 +180,6 @@ function PlanogramConfigurator(props) {
         row: line.row,
       });
     });
-    asyncSetLinePositionsContext(linePositions);
   };
 
   const onMouseDownGeneral = (e) => {

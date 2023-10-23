@@ -5,12 +5,9 @@ export function ContextProvider({ children }) {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [linePositionsContext, setLinePositionsContext] = useState([]);
 
-  const asyncSetLinePositionsContext = async (linePositions) => {
-    setLinePositionsContext(linePositions);
-  }
 
   return (
-    <Context.Provider value={{ uploadedFile, setUploadedFile, linePositionsContext, setLinePositionsContext, asyncSetLinePositionsContext}}>
+    <Context.Provider value={{ uploadedFile, setUploadedFile, linePositionsContext, setLinePositionsContext}}>
       {children}
     </Context.Provider>
   );

@@ -19,12 +19,14 @@ function PlanogramForms(props) {
 
   const post = async () => {
     await postPlanogramModel({ imagen: props.imagen });
-    const matriz_productos = await postPlanogramProducts({
-      coordenadas: { coordenadas: props.rectangles },
-    });
+
     const url_imagen = await postPlanogramImage({
       imagen: props.imagen,
       type: props.imageType,
+    });
+
+    const matriz_productos = await postPlanogramProducts({
+      coordenadas: { coordenadas: props.rectangles },
     });
 
     const planogramData = {
@@ -32,7 +34,7 @@ function PlanogramForms(props) {
       coordenadas: {"coordenadas": props.rectangles},
       id_manager: "440e8400-e29b-41d4-a716-446655440000",
       matriz_productos: {"productos": matriz_productos},
-      lineas: linePositionsContext, // No se obtiene bien
+      lineas: linePositionsContext,
     };
 
     const planogramResponse = await postPlanogram(planogramData);
