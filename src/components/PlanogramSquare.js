@@ -11,7 +11,7 @@ import PlanogramForms from "./PlanogramForms";
 import PlanogramConfigurator from "./PlanogramConfigurator";
 import { Context } from "../pages/RoutesPages";
 
-function PlanogramSquare() {
+function PlanogramSquare(props) {
   const { uploadedFile, imageSizes } = useContext(Context);
   const [showForm, setShowForm] = useState(false);
   const [rows, setRows] = useState(0);
@@ -34,6 +34,10 @@ function PlanogramSquare() {
       );
     }
   }, [rows]);
+
+  useEffect(() => {
+      props.setFinalizado(finished);
+  }, [finished]);
   
   return (
     <div className="PlanogramSquare">
