@@ -9,7 +9,7 @@ import {
 import { Context } from "../pages/RoutesPages";
 
 function PlanogramForms(props) {
-  const { linePositionsContext } = useContext(Context);
+  const { linePositionsContext, imageSizes } = useContext(Context);
 
   useEffect(() => {
     if (props.rectangles.length > 0) {
@@ -18,7 +18,8 @@ function PlanogramForms(props) {
   }, [props.rectangles]);
 
   const post = async () => {
-    await postPlanogramModel({ imagen: props.imagen });
+    await postPlanogramModel({ imagen: props.imagen, scaleWidth: imageSizes.width,
+      scaleHeight: imageSizes.height});
 
     const url_imagen = await postPlanogramImage({
       imagen: props.imagen,

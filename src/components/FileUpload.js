@@ -7,7 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 function FileUpload() {
   const navigate = useNavigate();
 
-  const { setUploadedFile } = useContext(Context);
+  const { setUploadedFile, setImageSizes } = useContext(Context);
   const [files, setFiles] = useState([]);
   const [fileRejections, setFileRejections] = useState([]);
 
@@ -23,6 +23,13 @@ function FileUpload() {
 
   const handleUpload = () => {
     if (files.length > 0) {
+      // get the width and height of the image
+      const img = new Image();
+      img.src = URL.createObjectURL(files[0]);
+      img.onload = function () {
+        setImageSizes({ width: this.width, height: this.height });
+      };
+
       setUploadedFile(files[0]);
       // Route to the next page
       navigate("/planogram");

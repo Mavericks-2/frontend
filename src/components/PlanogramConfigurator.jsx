@@ -10,7 +10,7 @@ function PlanogramConfigurator(props) {
   const [canvas, setCanvas] = useState(null);
   const [RowsDrawings, setRowsDrawings] = useState([]);
   const [columnDrawings, setColumnDrawings] = useState([]);
-  const { setLinePositionsContext }  = useContext(Context);
+  const { setLinePositionsContext, imageSizes }  = useContext(Context);
   let isDrawing = false;
   let selectedLine = null;
   
@@ -277,8 +277,8 @@ function PlanogramConfigurator(props) {
   return (
     <canvas
       id="planogram-configurator"
-      width="500"
-      height="250"
+      width= {imageSizes.width}
+      height= {imageSizes.height}
       ref={canvasRef}
       style={{background: "transparent"}}
       onMouseDown={onMouseDownGeneral}

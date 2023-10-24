@@ -59,6 +59,8 @@ export async function postPlanogramModel(planogramData) {
 
     const bodyPlanogramData = {
       imagen: imagenFinalBase64,
+      scaleWidth: planogramData.scaleWidth,
+      scaleHeight: planogramData.scaleHeight,
     };
 
     fetch(`${FLASK_BASE_URL}/uploadImage`, {

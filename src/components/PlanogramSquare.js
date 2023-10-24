@@ -12,7 +12,7 @@ import PlanogramConfigurator from "./PlanogramConfigurator";
 import { Context } from "../pages/RoutesPages";
 
 function PlanogramSquare() {
-  const { uploadedFile } = useContext(Context);
+  const { uploadedFile, imageSizes } = useContext(Context);
   const [showForm, setShowForm] = useState(false);
   const [rows, setRows] = useState(0);
   const [isRowsConfigured, setIsRowsConfigured] = useState(false);
@@ -34,15 +34,16 @@ function PlanogramSquare() {
       );
     }
   }, [rows]);
-
+  
   return (
     <div className="PlanogramSquare">
       <h1>¿Estás listo para subir la configuración?</h1>
       <div
         style={{
-          width: 500,
-          height: 250,
-          backgroundSize: "cover",
+          width: imageSizes.width,
+          height: imageSizes.height,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
         }}
         ref={imageDiv}
       >
