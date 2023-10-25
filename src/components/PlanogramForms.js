@@ -7,6 +7,7 @@ import {
   postPlanogramImage,
 } from "../services/PlanogramService";
 import { Context } from "../pages/RoutesPages";
+import { toast } from "react-toastify";
 
 function PlanogramForms(props) {
   const { linePositionsContext, imageSizes } = useContext(Context);
@@ -14,37 +15,50 @@ function PlanogramForms(props) {
   useEffect(() => {
     if (props.rectangles.length > 0) {
       post();
+      props.setFinalizado(true);
     }
   }, [props.rectangles]);
 
   const post = async () => {
-    await postPlanogramModel({ imagen: props.imagen, scaleWidth: imageSizes.width,
-      scaleHeight: imageSizes.height});
+    toast.promise(
+      async () => {
+        await postPlanogramModel({
+          imagen: props.imagen,
+          scaleWidth: imageSizes.width,
+          scaleHeight: imageSizes.height,
+        });
 
-    const url_imagen = await postPlanogramImage({
-      imagen: props.imagen,
-      type: props.imageType,
-    });
+        const url_imagen = await postPlanogramImage({
+          imagen: props.imagen,
+          type: props.imageType,
+        });
 
-    const matriz_productos = await postPlanogramProducts({
-      coordenadas: { coordenadas: props.rectangles },
-    });
+        const matriz_productos = await postPlanogramProducts({
+          coordenadas: { coordenadas: props.rectangles },
+        });
 
-    const planogramData = {
-      url_imagen: url_imagen,
-      coordenadas: {"coordenadas": props.rectangles},
-      id_manager: "440e8400-e29b-41d4-a716-446655440000",
-      matriz_productos: {"productos": matriz_productos},
-      lineas: linePositionsContext,
-    };
+        const planogramData = {
+          url_imagen: url_imagen,
+          coordenadas: { coordenadas: props.rectangles },
+          id_manager: "440e8400-e29b-41d4-a716-446655440000",
+          matriz_productos: { productos: matriz_productos },
+          lineas: linePositionsContext,
+        };
 
-    const planogramResponse = await postPlanogram(planogramData);
-
-    if (planogramResponse === "ok") {
-      console.log("Planograma creado exitosamente");
-    } else {
-      console.log("Error al crear planograma");
-    }
+        await postPlanogram(planogramData);
+      },
+      {
+        pending: "Creando planograma",
+        success: "Planograma creado exitosamente",
+        error: "Error al crear planograma",
+      },
+      {
+        autoClose: 500,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: true,
+      }
+    );
   };
 
   const handleContinueClick = async () => {

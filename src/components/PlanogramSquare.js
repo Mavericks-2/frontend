@@ -34,10 +34,6 @@ function PlanogramSquare(props) {
       );
     }
   }, [rows]);
-
-  useEffect(() => {
-      props.setFinalizado(finished);
-  }, [finished]);
   
   return (
     <div className="PlanogramSquare">
@@ -73,6 +69,7 @@ function PlanogramSquare(props) {
             setFinished={setFinished}
             imagen={uploadedFile ? URL.createObjectURL(uploadedFile) : Gondola}
             imageType={uploadedFile ? uploadedFile.type : "image/jpeg"}
+            setFinalizado={props.setFinalizado}
           />
         </Fragment>
       ) : (
