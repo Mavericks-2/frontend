@@ -1,13 +1,13 @@
 import './App.css';
-import FileUpload from './components/FileUpload';
-import Navbar from './components/Navbar';
-import PlanogramSquare from './components/PlanogramSquare';
 import RoutesPage from './pages/RoutesPages';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div className='App'>
       <RoutesPage />
+      <ToastContainer />
     </div>
   );
 }
