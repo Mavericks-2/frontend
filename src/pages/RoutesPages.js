@@ -6,7 +6,7 @@ import UploadPlanogramPage from "./UploadPlanogramPage";
 import PlanogramModifierPage from "./PlanogramModifierPage";
 import Navbar from "../components/Navbar";
 import { ContextProvider } from "../providers/ContextProvider";
-
+import DashboardPage from "./DashboardPage";
 
 export const Context = createContext();
 
@@ -17,6 +17,7 @@ function RoutesPage() {
         <Routes>
           <Route path="/" element={<UploadPlanogramPage />} />
           <Route path="/planogram" element={<PlanogramModifierPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </ContextProvider>
     </Fragment>
