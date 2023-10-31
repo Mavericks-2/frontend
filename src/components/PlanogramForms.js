@@ -8,6 +8,7 @@ import {
 } from "../services/PlanogramService";
 import { Context } from "../pages/RoutesPages";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 function PlanogramForms(props) {
   const { linePositionsContext, imageSizes } = useContext(Context);
@@ -37,10 +38,12 @@ function PlanogramForms(props) {
           coordenadas: { coordenadas: props.rectangles },
         });
 
+        const awsCognitoId = Cookies.get("awsCognitoId");
+
         const planogramData = {
           url_imagen: url_imagen,
           coordenadas: { coordenadas: props.rectangles },
-          id_manager: "440e8400-e29b-41d4-a716-446655440000",
+          id_manager: awsCognitoId,
           matriz_productos: { productos: matriz_productos },
           lineas: linePositionsContext,
         };

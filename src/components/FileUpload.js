@@ -1,11 +1,14 @@
 import FileUploadStyles from "../styles/FileUploadStyles.css";
 import { Pane, FileUploader, FileCard, Button } from "evergreen-ui";
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { Context } from "../pages/RoutesPages";
-import { useNavigate, Link } from "react-router-dom"; 
+import { useNavigate, Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function FileUpload() {
-  const navigate = useNavigate();
+  const { userData, setUserData } = useContext(Context);
 
   const { setUploadedFile, setImageSizes } = useContext(Context);
   const [files, setFiles] = useState([]);
@@ -21,18 +24,35 @@ function FileUpload() {
     setFileRejections([]);
   }, []);
 
-  const handleUpload = () => {
-    if (files.length > 0) {
-      // get the width and height of the image
-      const img = new Image();
-      img.src = URL.createObjectURL(files[0]);
-      img.onload = function () {
-        setImageSizes({ width: this.width, height: this.height });
-      };
+  const navigate = useNavigate();
 
-      setUploadedFile(files[0]);
-      // Route to the next page
-      navigate("/planogram");
+  useEffect(() => {
+    if (!userData) {
+      const userToken = Cookies.get("userToken");
+      const name = Cookies.get("name");
+      const lastName = Cookies.get("lastName");
+      if (userToken && name && lastName) {
+        setUserData({ userToken, name, lastName });
+      }
+    }
+  }, []);
+
+  const handleUpload = () => {
+    if (!userData) {
+      toast.error("Inicia sesión para continuar");
+    } else {
+      if (files.length > 0) {
+        // get the width and height of the image
+        const img = new Image();
+        img.src = URL.createObjectURL(files[0]);
+        img.onload = function () {
+          setImageSizes({ width: this.width, height: this.height });
+        };
+
+        setUploadedFile(files[0]);
+        // Route to the next page
+        navigate("/planogram");
+      }
     }
   };
   return (
