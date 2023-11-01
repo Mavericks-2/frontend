@@ -72,6 +72,7 @@ export async function getUser(userInfo) {
       name: data.user.nombre,
       lastName: data.user.apellido,
       awsCognitoId: data.user.awsCognitoId,
+      id_manager: data.user.id_manager,
     };
     return userInfoData;
   });

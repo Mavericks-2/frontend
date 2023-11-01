@@ -65,6 +65,7 @@ function UserSignInPage(props) {
           Cookies.set("name", userInfo.name);
           Cookies.set("lastName", userInfo.lastName);
           Cookies.set("awsCognitoId", userInfo.awsCognitoId);
+          Cookies.set("id_manager", userInfo.id_manager);
 
         } else if (title === "Registrarse") {
           // Registrar usuario
@@ -92,6 +93,7 @@ function UserSignInPage(props) {
           Cookies.set("lastName", userData.lastName);
           Cookies.set("userToken", response);
           Cookies.set("awsCognitoId", userData.awsCognitoId);
+          Cookies.set("id_manager", userData.id_manager);
           // TODO: Redireccionar a página de inicio
           navigate("/");
         }

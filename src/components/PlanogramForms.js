@@ -38,12 +38,12 @@ function PlanogramForms(props) {
           coordenadas: { coordenadas: props.rectangles },
         });
 
-        const awsCognitoId = Cookies.get("awsCognitoId");
+        const idManager = Cookies.get("id_manager");
 
         const planogramData = {
           url_imagen: url_imagen,
           coordenadas: { coordenadas: props.rectangles },
-          id_manager: awsCognitoId,
+          id_manager: idManager,
           matriz_productos: { productos: matriz_productos },
           lineas: linePositionsContext,
         };

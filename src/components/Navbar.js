@@ -52,6 +52,8 @@ function Navbar() {
       Cookies.remove("userToken");
       Cookies.remove("name");
       Cookies.remove("lastName");
+      Cookies.remove("id_manager");
+      Cookies.remove("awsCognitoId");
       setTitle("Iniciar Sesión");
       setUserData(null);
     } else {
