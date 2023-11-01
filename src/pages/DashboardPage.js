@@ -1,12 +1,14 @@
 import Navbar from "../components/Navbar";
 import { Fragment, useEffect, useState } from "react";
-import { getIntentosPrevAcomodo } from "../services/StatusService";
+import { getIntentosPrevAcomodo, getMatrizDiferencias } from "../services/StatusService";
 import ColumnGraph from "../components/ColumnGraph";
 import DashboardsStyle from "../styles/DashboardsStyle.css";
 import PieGraph from "../components/PieGraph";
+import LineGraph from "../components/LineGraph";
 
 function DashboardPage() {
   const [intentosPrevAcomodoData, setIntentosPrevAcomodoData] = useState([]);
+  const [matrizDiferenciaData, setMatrizDiferenciaData] = useState([]);
   useEffect(() => {
     getIntentosPrevAcomodo()
       .then((data) => {
@@ -18,7 +20,42 @@ function DashboardPage() {
           error
         );
       });
-  }, []);
+    getMatrizDiferencias()
+        .then((data) => {
+            setMatrizDiferenciaData(data);
+            // console.log(data);
+        })
+        .catch((error) => {
+            console.error(
+            "Error fetching difference matrix: ",
+            error
+            );
+        });
+  }, [])
+
+  function formatFecha(fecha) {
+    const parts = fecha.split('-');
+    return `${parts[2]}/${parts[1]}`;
+  }
+  function contarUnosEnMatriz(matrices) {
+    // Convierte la cadena en una matriz bidimensional
+    const matricesArray = JSON.parse(`[${matrices}]`);
+    
+    let contadorUnos = 0;
+    
+    matricesArray.forEach((matriz) => {
+      matriz.forEach((fila) => {
+        fila.forEach((elemento) => {
+          if (elemento === 1) {
+            contadorUnos++;
+          }
+        });
+      });
+    });
+    
+    return contadorUnos;
+  }
+  
 
   return (
     <>
@@ -41,13 +78,25 @@ function DashboardPage() {
                     <p>Cargando datos...</p>
                 )}
                 </ul>
+                <ul>
+                    {matrizDiferenciaData.length > 0 ? (
+                        matrizDiferenciaData.map((matriz, index) => (
+                            <li key={index}>
+                                <p>Matriz: {matriz.matricesDiferencias}</p>
+                                <p>Fecha: {matriz.fecha}</p>
+                                </li>
+                        ))
+                    ) : (
+                        <p>Cargando datos...</p>
+                    )}
+                </ul>
                 </div>
             </div>
         </div> */}
       <Fragment>
         <div className="dashboards-main-container">
           <div className="header">
-            <p className="title">Dashboards</p>
+            <p className="title">Visualización de dashboards</p>
           </div>
           <div className="dashboards-container">
             <div className="dashboards-item">
@@ -55,16 +104,28 @@ function DashboardPage() {
                 Número de intentos incorrectos
               </div>
               <ColumnGraph
-                data={intentosPrevAcomodoData}
+                data={intentosPrevAcomodoData.map(item => ({
+                    ...item,
+                    fecha: formatFecha(item.fecha)
+                  }))}
                 xField={"fecha"}
                 yField={"conteo"}
               />
             </div>
             <div className="dashboards-item">
               <div className="dashboard-item-title">
-                Productos mal acomodados
+                Número de productos fallidos
               </div>
-              <PieGraph />
+              <LineGraph
+              data = {matrizDiferenciaData.map(item => ({
+                ...item,
+                unos: contarUnosEnMatriz(item.matricesDiferencias),
+                fecha: formatFecha(item.fecha)
+              }))}
+              xField={"fecha"}          
+              yField={"unos"}
+              value={"unos"}
+               />
             </div>
           </div>
         </div>

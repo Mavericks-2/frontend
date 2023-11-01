@@ -1,9 +1,8 @@
 import React from "react";
 import LineGraphStyle from "../styles/LineGraphStyle.css";
-import { Column } from "@ant-design/charts";
+import { Line } from "@ant-design/charts";
 
-function ColumnGraph(props) {
-  const valor = props.yField;
+function LineGraph(props) {
   const data = props.data ? props.data : [
     { year: "1991", value: 3 },
     { year: "1992", value: 4 },
@@ -21,7 +20,6 @@ function ColumnGraph(props) {
     height: 150,
     xField: props.xField ||"year",
     yField: props.yField ||"value",
-    color: "orange",
     point: {
       size: 5,
       shape: "diamond | circule",
@@ -30,8 +28,7 @@ function ColumnGraph(props) {
       formatter: (data) => {
         return {
           name: "",
-        //   value: data.props.yField,
-          value: data.conteo,
+          value: data.unos,
         };
       },
       customContent: (name, data) =>
@@ -44,8 +41,7 @@ function ColumnGraph(props) {
       position: "right | left",
     },
   };
-  return <Column {...config}/>
-
+  return <Line {...config} />;
 }
 
-export default ColumnGraph;
+export default LineGraph;

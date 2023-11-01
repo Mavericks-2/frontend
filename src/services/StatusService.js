@@ -15,3 +15,18 @@ export async function getIntentosPrevAcomodo() {
     throw new Error("Error getting intentosPrevAcomodo");
   }
 }
+export async function getMatrizDiferencias(){
+    const response = await fetch(`${API_BASE_URL}/status/getMatrizDiferencias`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    
+      if (response.status === 200) {
+        const data = await response.json();
+        return data;
+      } else {
+        throw new Error("Error getting matrizDiferencia");
+      }
+}
