@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Context } from "../pages/RoutesPages";
+import Cookies from 'js-cookie';
 
 export function ContextProvider({ children }) {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [linePositionsContext, setLinePositionsContext] = useState([]);
   const [imageSizes, setImageSizes] = useState({ width: 0, height: 0 });
   const [scaled, setScaled] = useState(false);
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+      const userToken = Cookies.get("userToken");
+      const name = Cookies.get("name");
+      const lastName = Cookies.get("lastName");
+      if (userToken && name && lastName) {
+          setUserData({ userToken, name, lastName });
+      }
+  }, []);
 
   useEffect(() => {
     if (imageSizes.width > 0 && imageSizes.height > 0 && !scaled) {
@@ -28,7 +39,7 @@ export function ContextProvider({ children }) {
   }
 
   return (
-    <Context.Provider value={{ uploadedFile, setUploadedFile, linePositionsContext, setLinePositionsContext, imageSizes, setImageSizes}}>
+    <Context.Provider value={{ uploadedFile, setUploadedFile, linePositionsContext, setLinePositionsContext, imageSizes, setImageSizes, userData: userData, setUserData: setUserData}}>
       {children}
     </Context.Provider>
   );

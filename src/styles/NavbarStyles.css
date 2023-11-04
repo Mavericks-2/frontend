@@ -4,7 +4,7 @@ font-family: 'Poppins', sans-serif;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  border-bottom: 6px solid red;
+  border-bottom: 6px solid #ed1c24;
 }
 
 .Navbar > a {
@@ -16,8 +16,24 @@ font-family: 'Poppins', sans-serif;
     margin: 10px;
   }
 
+.logo > img {
+  width: 70px;
+}
+
 .Navbar > .OxxoLogoLink > .OxxoLogo {
   width: 80px;
+}
+
+.Navbar > .UserLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.Navbar > .UserLink > .UserName {
+  text-decoration: none;
+  color: black;
 }
 
 .Navbar > .UserLink > .User {

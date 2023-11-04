@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import UploadPlanogramPage from "./UploadPlanogramPage";
 import PlanogramModifierPage from "./PlanogramModifierPage";
 import Navbar from "../components/Navbar";
+import UserSignInPage from "./UserSignInPage";
 import { ContextProvider } from "../providers/ContextProvider";
 import DashboardPage from "./DashboardPage";
 
@@ -17,6 +18,7 @@ function RoutesPage() {
         <Routes>
           <Route path="/" element={<UploadPlanogramPage />} />
           <Route path="/planogram" element={<PlanogramModifierPage />} />
+          <Route path="/login" element={<UserSignInPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </ContextProvider>
