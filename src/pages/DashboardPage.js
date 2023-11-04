@@ -3,15 +3,18 @@ import { Fragment, useEffect, useState } from "react";
 import {
   getIntentosPrevAcomodo,
   getMatrizDiferencias,
+  getFechasStatus,
 } from "../services/StatusService";
 import ColumnGraph from "../components/ColumnGraph";
 import DashboardsStyle from "../styles/DashboardsStyle.css";
 import PieGraph from "../components/PieGraph";
 import LineGraph from "../components/LineGraph";
+import { get, set } from "js-cookie";
 
 function DashboardPage() {
   const [intentosPrevAcomodoData, setIntentosPrevAcomodoData] = useState([]);
   const [matrizDiferenciaData, setMatrizDiferenciaData] = useState([]);
+  const [fechasStatusData, setFechasStatusData] = useState([]);
 
   useEffect(() => {
     getIntentosPrevAcomodo()
@@ -30,6 +33,13 @@ function DashboardPage() {
       })
       .catch((error) => {
         console.error("Error fetching difference matrix: ", error);
+      });
+    getFechasStatus()
+      .then((data) => {
+        setFechasStatusData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching status dates: ", error);
       });
   }, []);
 
@@ -76,30 +86,33 @@ function DashboardPage() {
     });
     return productoCount;
   }
-  
+
+  function tiempoDiferenciaAcomodo(fecha) {}
+
   const productosContados = contarProductos(
     matrizDiferenciaData.map((item) => item.matricesProductosF)
   );
 
-  const productosContadosArray = Object.keys(productosContados).map((producto) => ({
-    producto: producto,
-    count: productosContados[producto],
-  }));
-  
+  const productosContadosArray = Object.keys(productosContados).map(
+    (producto) => ({
+      producto: producto,
+      count: productosContados[producto],
+    })
+  );
 
   return (
     <>
       <Navbar />
-      <div className="container">
+      {/* <div className="container">
         <div className="row">
           <div className="col-12">
-            {/* <ul>
-              {matrizDiferenciaData.length > 0 ? (
-                matrizDiferenciaData.map((matriz, index) => (
+            <ul>
+              {fechasStatusData.length > 0 ? (
+                fechasStatusData.map((matriz, index) => (
                   <li key={index}>
-                    <p>Matriz: {matriz.matricesDiferencias}</p>
+                    <p>Primer acomodado: {matriz.timestamp}</p>
                     <p>
-                      Matriz productos fallidos: {matriz.matricesProductosF}
+                      Primer desacomodado: {matriz.primerDesacomodado.estado}
                     </p>
                     <p>Fecha: {matriz.fecha}</p>
                   </li>
@@ -107,10 +120,10 @@ function DashboardPage() {
               ) : (
                 <p>Cargando datos...</p>
               )}
-            </ul> */}
+            </ul>
           </div>
         </div>
-      </div>
+      </div> */}
       <Fragment>
         <div className="dashboards-main-container">
           <div className="header">
@@ -128,6 +141,7 @@ function DashboardPage() {
                 }))}
                 xField={"fecha"}
                 yField={"conteo"}
+                color={"orange"}
               />
             </div>
             <div className="dashboards-item">
@@ -145,11 +159,32 @@ function DashboardPage() {
               />
             </div>
             <div className="dashboards-item">
+              <div className="dashboard-item-title">Productos fallidos</div>
+              <PieGraph
+                data={productosContadosArray}
+                xField="producto"
+                yField="count"
+              />
+            </div>
+            <div className="dashboards-item">
               <div className="dashboard-item-title">
-                Productos fallidos
+                Diferencia en minutos entre el primer intento y el acomodo
+                correcto
               </div>
-              <PieGraph data={productosContadosArray} xField="producto" yField="count" />
-
+              <ColumnGraph
+                data={
+                  fechasStatusData
+                    .map((item) => ({
+                      ...item,
+                      fecha: formatFecha(item.fecha),
+                      timestamp: item.timestamp.toFixed(1),
+                    }))
+                    .sort((a, b) => a.timestamp - b.timestamp)
+                }
+                xField={"fecha"}
+                yField={"timestamp"}
+                color={"#8B0000"}
+              />
             </div>
           </div>
         </div>

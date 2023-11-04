@@ -30,3 +30,18 @@ export async function getMatrizDiferencias(){
         throw new Error("Error getting matrizDiferencia");
       }
 }
+
+export async function getFechasStatus(){
+    const response = await fetch(`${API_BASE_URL}/status/getFechasStatus`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+    });
+    if (response.status === 200) {
+        const data = await response.json();
+        return data;
+    } else {
+        throw new Error("Error getting fechasStatus");
+    }
+}

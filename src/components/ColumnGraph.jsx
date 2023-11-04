@@ -21,7 +21,7 @@ function ColumnGraph(props) {
     height: 150,
     xField: props.xField ||"year",
     yField: props.yField ||"value",
-    color: "orange",
+    color:  props.color, 
     point: {
       size: 5,
       shape: "diamond | circule",
@@ -30,8 +30,7 @@ function ColumnGraph(props) {
       formatter: (data) => {
         return {
           name: "",
-        //   value: data.props.yField,
-          value: data.conteo,
+          value: data.conteo||data.timestamp,
         };
       },
       customContent: (name, data) =>
