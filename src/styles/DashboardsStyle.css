@@ -5,7 +5,7 @@
     align-items: center;
     width: 100%;
     padding: 0 0 64px 0;
-    gap: 64px;
+    gap: 15px;
 }
 
 .dashboards-main-container > .header {
@@ -31,10 +31,17 @@
     width: 500px;
     height: 250px;
     border: 1px solid transparent;
-    background: linear-gradient(white, white) padding-box, linear-gradient(180deg, #0193fd, #3f51f4) border-box;
+    background: linear-gradient(white, rgb(242, 240, 240)) padding-box, linear-gradient(180deg, #d6d7d8, #a7a7a7) border-box;
     border-radius: 12px;
     padding: 36px 0px;
     gap: 24px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dashboards-main-container > .dashboards-container > .dashboards-item > .dashboard-item-title {
+    color: #040404;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 @media screen and (max-width: 768px) {

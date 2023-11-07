@@ -7,6 +7,12 @@ font-family: 'Poppins', sans-serif;
   border-bottom: 6px solid #ed1c24;
 }
 
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
 .Navbar > a {
     display: flex;
     align-items: center;
@@ -14,6 +20,7 @@ font-family: 'Poppins', sans-serif;
 
 .Navbar > .Title {
     margin: 10px;
+    margin-left: 110px;
   }
 
 .logo > img {
@@ -24,18 +31,22 @@ font-family: 'Poppins', sans-serif;
   width: 80px;
 }
 
-.Navbar > .UserLink {
+.right > .DashboardLink > .DashboardImg {
+  width: 50px;
+}
+
+.right > .UserLink {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.Navbar > .UserLink > .UserName {
+.right > .UserLink > .UserName {
   text-decoration: none;
   color: black;
 }
 
-.Navbar > .UserLink > .User {
+.right > .UserLink > .User {
   width: 40px;
 }

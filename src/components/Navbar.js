@@ -1,5 +1,6 @@
 import OxxoLogo from "../assets/oxxo_logo.png";
 import User from "../assets/user.png";
+import Dashboard from "../assets/dashboard.png";
 import NavbarStyles from "../styles/NavbarStyles.css";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useContext } from "react";
@@ -61,18 +62,31 @@ function Navbar() {
     }
   };
 
+  const handleDashboard = () => {
+    if (!userData) {
+      toast.error("Inicia sesión para continuar");
+    } else {
+      navigate("/dashboard");
+    }
+  };
+
   return (
     <div className="Navbar">
       <a href="/" className="OxxoLogoLink">
         <img className="OxxoLogo" src={OxxoLogo} alt="Oxxo Logo" />
       </a>
       <h1 className="Title">Administrador</h1>
-      <a className="UserLink" href="#" onClick={
-        handleTitle
-      }>
-        <img className="User" src={User} alt="User" />
-        <p className="UserName">{  title}</p>
-      </a>
+      <div className="right">
+        <a className="DashboardLink" onClick={handleDashboard} >
+          <img className="DashboardImg" src={Dashboard} alt="Dashboard" />
+        </a>
+        <a className="UserLink" href="#" onClick={
+          handleTitle
+        }>
+          <img className="User" src={User} alt="User" />
+          <p className="UserName">{  title}</p>
+        </a>
+      </div>
     </div>
   );
 }
