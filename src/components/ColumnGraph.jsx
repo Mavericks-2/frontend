@@ -3,7 +3,6 @@ import LineGraphStyle from "../styles/LineGraphStyle.css";
 import { Column } from "@ant-design/charts";
 
 function ColumnGraph(props) {
-  const valor = props.yField;
   const data = props.data ? props.data : [
     { year: "1991", value: 3 },
     { year: "1992", value: 4 },

@@ -20,6 +20,7 @@ function DashboardPage() {
   const [promProdFallidosResultado, setPromProdFallidosResultado] =
     useState(null);
   const matrizProdIncorrectos = [];
+  const [productoMasErrores, setProductoMasErrores] = useState(null);
 
   useEffect(() => {
     getIntentosPrevAcomodo()
@@ -48,10 +49,6 @@ function DashboardPage() {
       .catch((error) => {
         console.error("Error fetching status dates: ", error);
       });
-    promProdFallidos.then((resultado) => {
-        console.log("Resultado de promProdFallidos:", resultado);
-      setPromProdFallidosResultado(resultado);
-    });
   }, []);
 
   function formatFecha(fecha) {
@@ -108,7 +105,7 @@ function DashboardPage() {
       count: productosContados[producto],
     })
   );
-
+  
   function calcularDecimal(data) {
     const size = data.length;
     const correctos = data.reduce((contador, item) => {
@@ -128,6 +125,7 @@ function DashboardPage() {
     });
     return intentosIncorrectos / length;
   }
+
   const promProdFallidos = (async () => {
     while (matrizProdIncorrectos.length === 0) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -136,9 +134,31 @@ function DashboardPage() {
       (total, current) => total + current,
       0
     );
-    console.log("prom", total / matrizDiferenciaData.length);
+    setPromProdFallidosResultado(total / matrizDiferenciaData.length);
     return total / matrizDiferenciaData.length;
   })();
+
+  function promedioTiempoAcomodo() {
+    const sumaTimestamp = fechasStatusData.reduce(
+      (total, item) => total + item.timestamp,
+      0
+    );
+    return sumaTimestamp / fechasStatusData.length;
+  }
+
+  const obtenerProductoConMayorCount = (async () => {
+    while (productosContadosArray.length === 0) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+    if (!productoMasErrores && productosContadosArray.length > 0) {
+    const matrixMaxCount = productosContadosArray.reduce(
+      (max, current) => (current.count > max.count ? current : max),
+      productosContadosArray[0]
+    );
+    setProductoMasErrores(matrixMaxCount.producto);
+    return matrixMaxCount.producto;}
+  })();
+  
 
   return (
     <Fragment>
@@ -183,9 +203,7 @@ function DashboardPage() {
               yField={"conteo"}
               color={"orange"}
             />
-            <p>
-              El promedio de intentos incorrectos es {promedioIntentosMalos}
-            </p>
+            <p>Promedio de intentos incorrectos: {promedioIntentosMalos}</p>
           </div>
           <div className="dashboards-item">
             <div className="dashboard-item-title">
@@ -200,9 +218,7 @@ function DashboardPage() {
               xField={"fecha"}
               yField={"unos"}
             />
-            <p>
-              El promedio de productos fallidos es {promProdFallidosResultado}
-            </p>
+            <p>Promedio de productos fallidos: {promProdFallidosResultado}</p>
           </div>
           <div className="dashboards-item">
             <div className="dashboard-item-title">Productos fallidos</div>
@@ -211,6 +227,9 @@ function DashboardPage() {
               xField="producto"
               yField="count"
             />
+            <p>
+              El producto en el que más se equivocan es {productoMasErrores}
+            </p>
           </div>
           <div className="dashboards-item">
             <div className="dashboard-item-title">
@@ -228,6 +247,9 @@ function DashboardPage() {
               yField={"timestamp"}
               color={"#8B0000"}
             />
+            <p>
+              Promedio del tiempo: {promedioTiempoAcomodo().toFixed(1)} minutos
+            </p>
           </div>
           <div className="dashboards-item">
             <div className="dashboard-item-title">

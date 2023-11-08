@@ -29,7 +29,7 @@
     justify-content: center;
     align-items: center;
     width: 500px;
-    height: 250px;
+    height: 270px;
     border: 1px solid transparent;
     background: linear-gradient(white, rgb(242, 240, 240)) padding-box, linear-gradient(180deg, #d6d7d8, #a7a7a7) border-box;
     border-radius: 12px;
