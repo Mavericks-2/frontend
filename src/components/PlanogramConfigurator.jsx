@@ -57,7 +57,9 @@ function PlanogramConfigurator(props) {
   }, [props.finished]);
   
   const initializeRows = (rows) => {
-    rows = rows - 1;
+    // add 1 to number rows
+    rows++;
+    console.log("Initializing rows", rows);
     // Se define la altura inicial de cada fila
     let rowHeight = canvas.height / (rows + 1);
 
@@ -78,6 +80,9 @@ function PlanogramConfigurator(props) {
     rowYPositions.unshift(0);
     rowYPositions.push(canvas.height);
     rowYPositions.sort((a, b) => a - b);
+    
+    // eliminate first position
+    rowYPositions.shift();
 
     if (props.rows > 0) {
       let numColumnsByRow = props.columnProducts;
@@ -85,12 +90,12 @@ function PlanogramConfigurator(props) {
 
       for (let i = 0; i <= props.rows; i++) {
         // Se define el ancho de cada columna
-        let columnWidth = canvas.width / numColumnsByRow[i];
+        let columnWidth = canvas.width / (numColumnsByRow[i] + 2);
 
         // Se define la posición previa de la columna
         prev = 0;
 
-        for (let j = 0; j < numColumnsByRow[i] - 1; j++) {
+        for (let j = 0; j < numColumnsByRow[i] + 1; j++) {
           let startX = (j+1) * columnWidth;
           let startY = rowYPositions[i];
           let endY = rowYPositions[i + 1];
@@ -270,6 +275,19 @@ function PlanogramConfigurator(props) {
       width: canvas.width - prev.x1,
       height: canvas.height - prev.y1,
     });
+    
+    console.log("Before:", rectangles);
+
+    // Maintain rectangles close to the canvas borders
+    rectangles = rectangles.filter(
+      (rect) =>
+        rect.x !== 0 &&
+        rect.y !== 0 &&
+        rect.x + rect.width !== canvas.width &&
+        rect.y + rect.height !== canvas.height
+    );
+
+    console.log("After:", rectangles);
 
     return rectangles;
   };
