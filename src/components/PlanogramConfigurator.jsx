@@ -81,8 +81,9 @@ function PlanogramConfigurator(props) {
     rowYPositions.push(canvas.height);
     rowYPositions.sort((a, b) => a - b);
     
-    // eliminate first position
+    // eliminate first and last position
     rowYPositions.shift();
+    rowYPositions.pop();
 
     if (props.rows > 0) {
       let numColumnsByRow = props.columnProducts;
