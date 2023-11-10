@@ -10,6 +10,7 @@ import DashboardsStyle from "../styles/DashboardsStyle.css";
 import PieGraph from "../components/PieGraph";
 import LineGraph from "../components/LineGraph";
 import GaugePlot from "../components/GaugePlot";
+import GroupedGraph from "../components/GroupedGraph";
 
 function DashboardPage() {
   const [intentosPrevAcomodoData, setIntentosPrevAcomodoData] = useState([]);
@@ -26,7 +27,7 @@ function DashboardPage() {
     getIntentosPrevAcomodo()
       .then((data) => {
         setIntentosPrevAcomodoData(data);
-        setPromedioIntentosMalos(promedioIntentosInc(data));
+        setPromedioIntentosMalos(promedioIntentosInc(data).toFixed(1));
       })
       .catch((error) => {
         console.error(
@@ -105,7 +106,7 @@ function DashboardPage() {
       count: productosContados[producto],
     })
   );
-  
+
   function calcularDecimal(data) {
     const size = data.length;
     const correctos = data.reduce((contador, item) => {
@@ -134,7 +135,7 @@ function DashboardPage() {
       (total, current) => total + current,
       0
     );
-    setPromProdFallidosResultado(total / matrizDiferenciaData.length);
+    setPromProdFallidosResultado((total / matrizDiferenciaData.length).toFixed(1));
     return total / matrizDiferenciaData.length;
   })();
 
@@ -148,42 +149,21 @@ function DashboardPage() {
 
   const obtenerProductoConMayorCount = (async () => {
     while (productosContadosArray.length === 0) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
     if (!productoMasErrores && productosContadosArray.length > 0) {
-    const matrixMaxCount = productosContadosArray.reduce(
-      (max, current) => (current.count > max.count ? current : max),
-      productosContadosArray[0]
-    );
-    setProductoMasErrores(matrixMaxCount.producto);
-    return matrixMaxCount.producto;}
+      const matrixMaxCount = productosContadosArray.reduce(
+        (max, current) => (current.count > max.count ? current : max),
+        productosContadosArray[0]
+      );
+      setProductoMasErrores(matrixMaxCount.producto);
+      return matrixMaxCount.producto;
+    }
   })();
-  
 
   return (
     <Fragment>
       <Navbar />
-      {/*       <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <ul>
-              {fechasStatusData.length > 0 ? (
-                fechasStatusData.map((matriz, index) => (
-                  <li key={index}>
-                    <p>Primer acomodado: {matriz.timestamp}</p>
-                    <p>
-                      Primer desacomodado: {matriz.primerDesacomodado.estado}
-                    </p>
-                    <p>Fecha: {matriz.fecha}</p>
-                  </li>
-                ))
-              ) : (
-                <p>Cargando datos...</p>
-              )}
-            </ul>
-          </div>
-        </div>
-      </div> */}
       <div className="dashboards-main-container">
         <div className="header">
           <p className="title">Visualización de dashboards</p>
@@ -256,6 +236,21 @@ function DashboardPage() {
               Porcentaje de acomodos a la primera
             </div>
             <GaugePlot data={decimal} />
+          </div>
+          <div className="dashboards-item">
+            <div className="dashboard-item-title">
+              Colaboradores y sus errores
+            </div>
+            <GroupedGraph
+              data={intentosPrevAcomodoData.map((item) => ({
+                ...item,
+                fecha: formatFecha(item.fecha),
+                nombre: item.statusAcomodador.nombre,
+              }))}
+              xField={"fecha"}
+              yField={"conteo"}
+              seriesField={"nombre"}
+            />
           </div>
         </div>
       </div>

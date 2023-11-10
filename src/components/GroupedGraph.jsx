@@ -1,53 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import LineGraphStyle from "../styles/LineGraphStyle.css";
-import { Column } from '@ant-design/plots';
+import { Column } from "@ant-design/plots";
 
-function GroupedGraph (props) {
-  const [data, setData] = useState([]);
+function GroupedGraph(props) {
+  const { data, xField, yField, seriesField } = props;
+  const [chartData, setChartData] = useState(data || []);
 
   useEffect(() => {
-    asyncFetch();
-  }, []);
+    if (!data) {
+      asyncFetch();
+    } else {
+      setChartData(data);
+    }
+  }, [data]);
 
   const asyncFetch = () => {
-    fetch('https://gw.alipayobjects.com/os/antfincdn/iPY8JFnxdb/dodge-padding.json')
+    fetch(
+      "https://gw.alipayobjects.com/os/antfincdn/iPY8JFnxdb/dodge-padding.json"
+    )
       .then((response) => response.json())
-      .then((json) => setData(json))
+      .then((json) => setChartData(json))
       .catch((error) => {
-        console.log('fetch data failed', error);
+        console.log("fetch data failed", error);
       });
   };
+
   const config = {
-    data,
+    data: chartData,
+    xField: xField || "月份",
+    yField: yField || "月均降雨量",
     isGroup: true,
-    xField: '月份',
-    yField: '月均降雨量',
-    seriesField: 'name',
-    // 分组柱状图 组内柱子间的间距 (像素级别)
+    seriesField: seriesField || "name",
     dodgePadding: 2,
-    // 分组柱状图 组间的间距 (像素级别)
-    intervalPadding: 20,
     label: {
-      // 可手动配置 label 数据标签位置
-      position: 'middle',
-      // 'top', 'middle', 'bottom'
-      // 可配置附加的布局方法
+      position: "middle",
       layout: [
-        // 柱形图数据标签位置自动调整
         {
-          type: 'interval-adjust-position',
-        }, // 数据标签防遮挡
+          type: "interval-adjust-position",
+        },
         {
-          type: 'interval-hide-overlap',
-        }, // 数据标签文颜色自动调整
+          type: "interval-hide-overlap",
+        },
         {
-          type: 'adjust-color',
+          type: "adjust-color",
         },
       ],
     },
   };
 
   return <Column {...config} />;
-};
+}
 
 export default GroupedGraph;
