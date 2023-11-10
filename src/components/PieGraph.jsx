@@ -35,7 +35,7 @@ function PieGraph(props) {
         data: data,
         angleField: props.yField || "value",
         colorField: props.xField || "type",
-        radius: 0.9,
+        radius: 1.0,
         label: {
             type: "inner",
             offset: "-30%",

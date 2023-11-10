@@ -9,17 +9,25 @@ import ColumnGraph from "../components/ColumnGraph";
 import DashboardsStyle from "../styles/DashboardsStyle.css";
 import PieGraph from "../components/PieGraph";
 import LineGraph from "../components/LineGraph";
-import { get, set } from "js-cookie";
+import GaugePlot from "../components/GaugePlot";
+import GroupedGraph from "../components/GroupedGraph";
 
 function DashboardPage() {
   const [intentosPrevAcomodoData, setIntentosPrevAcomodoData] = useState([]);
   const [matrizDiferenciaData, setMatrizDiferenciaData] = useState([]);
   const [fechasStatusData, setFechasStatusData] = useState([]);
+  const [decimal, setDecimal] = useState(0);
+  const [promedioIntentosMalos, setPromedioIntentosMalos] = useState(0);
+  const [promProdFallidosResultado, setPromProdFallidosResultado] =
+    useState(null);
+  const matrizProdIncorrectos = [];
+  const [productoMasErrores, setProductoMasErrores] = useState(null);
 
   useEffect(() => {
     getIntentosPrevAcomodo()
       .then((data) => {
         setIntentosPrevAcomodoData(data);
+        setPromedioIntentosMalos(promedioIntentosInc(data).toFixed(1));
       })
       .catch((error) => {
         console.error(
@@ -37,6 +45,7 @@ function DashboardPage() {
     getFechasStatus()
       .then((data) => {
         setFechasStatusData(data);
+        setDecimal(calcularDecimal(data));
       })
       .catch((error) => {
         console.error("Error fetching status dates: ", error);
@@ -62,7 +71,7 @@ function DashboardPage() {
         });
       });
     });
-
+    matrizProdIncorrectos.push(contadorUnos);
     return contadorUnos;
   }
 
@@ -87,8 +96,6 @@ function DashboardPage() {
     return productoCount;
   }
 
-  function tiempoDiferenciaAcomodo(fecha) {}
-
   const productosContados = contarProductos(
     matrizDiferenciaData.map((item) => item.matricesProductosF)
   );
@@ -100,96 +107,154 @@ function DashboardPage() {
     })
   );
 
+  function calcularDecimal(data) {
+    const size = data.length;
+    const correctos = data.reduce((contador, item) => {
+      if (item.timestamp === 0) {
+        contador++;
+      }
+      return contador;
+    }, 0);
+    return correctos / size;
+  }
+
+  function promedioIntentosInc(data) {
+    const length = data.length;
+    let intentosIncorrectos = 0;
+    data.map((item) => {
+      intentosIncorrectos += item.conteo;
+    });
+    return intentosIncorrectos / length;
+  }
+
+  const promProdFallidos = (async () => {
+    while (matrizProdIncorrectos.length === 0) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+    const total = matrizProdIncorrectos.reduce(
+      (total, current) => total + current,
+      0
+    );
+    setPromProdFallidosResultado((total / matrizDiferenciaData.length).toFixed(1));
+    return total / matrizDiferenciaData.length;
+  })();
+
+  function promedioTiempoAcomodo() {
+    const sumaTimestamp = fechasStatusData.reduce(
+      (total, item) => total + item.timestamp,
+      0
+    );
+    return sumaTimestamp / fechasStatusData.length;
+  }
+
+  const obtenerProductoConMayorCount = (async () => {
+    while (productosContadosArray.length === 0) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+    if (!productoMasErrores && productosContadosArray.length > 0) {
+      const matrixMaxCount = productosContadosArray.reduce(
+        (max, current) => (current.count > max.count ? current : max),
+        productosContadosArray[0]
+      );
+      setProductoMasErrores(matrixMaxCount.producto);
+      return matrixMaxCount.producto;
+    }
+  })();
+
   return (
-    <>
+    <Fragment>
       <Navbar />
-      {/* <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <ul>
-              {fechasStatusData.length > 0 ? (
-                fechasStatusData.map((matriz, index) => (
-                  <li key={index}>
-                    <p>Primer acomodado: {matriz.timestamp}</p>
-                    <p>
-                      Primer desacomodado: {matriz.primerDesacomodado.estado}
-                    </p>
-                    <p>Fecha: {matriz.fecha}</p>
-                  </li>
-                ))
-              ) : (
-                <p>Cargando datos...</p>
-              )}
-            </ul>
-          </div>
+      <div className="dashboards-main-container">
+        <div className="header">
+          <p className="title">Visualización de dashboards</p>
         </div>
-      </div> */}
-      <Fragment>
-        <div className="dashboards-main-container">
-          <div className="header">
-            <p className="title">Visualización de dashboards</p>
+
+        <div className="dashboards-container">
+          <div className="dashboards-item">
+            <div className="dashboard-item-title">
+              Número de intentos incorrectos
+            </div>
+            <ColumnGraph
+              data={intentosPrevAcomodoData.map((item) => ({
+                ...item,
+                fecha: formatFecha(item.fecha),
+              }))}
+              xField={"fecha"}
+              yField={"conteo"}
+              color={"orange"}
+            />
+            <p>Promedio de intentos incorrectos: {promedioIntentosMalos}</p>
           </div>
-          <div className="dashboards-container">
-            <div className="dashboards-item">
-              <div className="dashboard-item-title">
-                Número de intentos incorrectos
-              </div>
-              <ColumnGraph
-                data={intentosPrevAcomodoData.map((item) => ({
+          <div className="dashboards-item">
+            <div className="dashboard-item-title">
+              Número de productos fallidos
+            </div>
+            <LineGraph
+              data={matrizDiferenciaData.map((item) => ({
+                ...item,
+                unos: contarUnosEnMatriz(item.matricesDiferencias),
+                fecha: formatFecha(item.fecha),
+              }))}
+              xField={"fecha"}
+              yField={"unos"}
+            />
+            <p>Promedio de productos fallidos: {promProdFallidosResultado}</p>
+          </div>
+          <div className="dashboards-item">
+            <div className="dashboard-item-title">Productos fallidos</div>
+            <PieGraph
+              data={productosContadosArray}
+              xField="producto"
+              yField="count"
+            />
+            <p>
+              El producto en el que más se equivocan es {productoMasErrores}
+            </p>
+          </div>
+          <div className="dashboards-item">
+            <div className="dashboard-item-title">
+              Minutos entre el primer intento y el acomodo correcto
+            </div>
+            <ColumnGraph
+              data={fechasStatusData
+                .map((item) => ({
                   ...item,
                   fecha: formatFecha(item.fecha),
-                }))}
-                xField={"fecha"}
-                yField={"conteo"}
-                color={"orange"}
-              />
+                  timestamp: item.timestamp.toFixed(1),
+                }))
+                .sort((a, b) => a.timestamp - b.timestamp)}
+              xField={"fecha"}
+              yField={"timestamp"}
+              color={"#8B0000"}
+            />
+            <p>
+              Promedio del tiempo: {promedioTiempoAcomodo().toFixed(1)} minutos
+            </p>
+          </div>
+          <div className="dashboards-item">
+            <div className="dashboard-item-title">
+              Porcentaje de acomodos a la primera
             </div>
-            <div className="dashboards-item">
-              <div className="dashboard-item-title">
-                Número de productos fallidos
-              </div>
-              <LineGraph
-                data={matrizDiferenciaData.map((item) => ({
-                  ...item,
-                  unos: contarUnosEnMatriz(item.matricesDiferencias),
-                  fecha: formatFecha(item.fecha),
-                }))}
-                xField={"fecha"}
-                yField={"unos"}
-              />
+            <GaugePlot data={decimal} />
+          </div>
+          <div className="dashboards-item">
+            <div className="dashboard-item-title">
+              Colaboradores y sus errores
             </div>
-            <div className="dashboards-item">
-              <div className="dashboard-item-title">Productos fallidos</div>
-              <PieGraph
-                data={productosContadosArray}
-                xField="producto"
-                yField="count"
-              />
-            </div>
-            <div className="dashboards-item">
-              <div className="dashboard-item-title">
-                Diferencia en minutos entre el primer intento y el acomodo
-                correcto
-              </div>
-              <ColumnGraph
-                data={
-                  fechasStatusData
-                    .map((item) => ({
-                      ...item,
-                      fecha: formatFecha(item.fecha),
-                      timestamp: item.timestamp.toFixed(1),
-                    }))
-                    .sort((a, b) => a.timestamp - b.timestamp)
-                }
-                xField={"fecha"}
-                yField={"timestamp"}
-                color={"#8B0000"}
-              />
-            </div>
+            <GroupedGraph
+              data={intentosPrevAcomodoData.map((item) => ({
+                ...item,
+                fecha: formatFecha(item.fecha),
+                nombre: item.statusAcomodador.nombre,
+              }))}
+              xField={"fecha"}
+              yField={"conteo"}
+              seriesField={"nombre"}
+            />
           </div>
         </div>
-      </Fragment>
-    </>
+      </div>
+    </Fragment>
   );
 }
 
