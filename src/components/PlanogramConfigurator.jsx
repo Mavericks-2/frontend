@@ -59,7 +59,6 @@ function PlanogramConfigurator(props) {
   const initializeRows = (rows) => {
     // add 1 to number rows
     rows++;
-    console.log("Initializing rows", rows);
     // Se define la altura inicial de cada fila
     let rowHeight = canvas.height / (rows + 1);
 
@@ -277,7 +276,6 @@ function PlanogramConfigurator(props) {
       height: canvas.height - prev.y1,
     });
     
-    console.log("Before:", rectangles);
 
     // Maintain rectangles close to the canvas borders
     rectangles = rectangles.filter(
@@ -288,7 +286,6 @@ function PlanogramConfigurator(props) {
         rect.y + rect.height !== canvas.height
     );
 
-    console.log("After:", rectangles);
 
     return rectangles;
   };

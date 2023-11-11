@@ -63,6 +63,7 @@ export async function postPlanogramModel(planogramData) {
       scaleHeight: planogramData.scaleHeight,
     };
 
+
     fetch(`${FLASK_BASE_URL}/uploadImage`, {
       method: "POST",
       headers: {
