@@ -29,6 +29,7 @@ export async function postPlanogramProducts(planogramData) {
   const bodyPlanogramData = {
     data: {
       coordenadas: planogramData.coordenadas,
+      actualSize: planogramData.actualSize,
     },
   };
   const validatePlanogramProducts = await fetch(
@@ -59,8 +60,7 @@ export async function postPlanogramModel(planogramData) {
 
     const bodyPlanogramData = {
       imagen: imagenFinalBase64,
-      scaleWidth: planogramData.scaleWidth,
-      scaleHeight: planogramData.scaleHeight,
+      transpose: true
     };
 
 

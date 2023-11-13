@@ -25,8 +25,6 @@ function PlanogramForms(props) {
       async () => {
         await postPlanogramModel({
           imagen: props.imagen,
-          scaleWidth: imageSizes.width,
-          scaleHeight: imageSizes.height,
         });
 
         const url_imagen = await postPlanogramImage({
@@ -36,6 +34,10 @@ function PlanogramForms(props) {
 
         const matriz_productos = await postPlanogramProducts({
           coordenadas: { coordenadas: props.rectangles },
+          actualSize: {
+            width: imageSizes.width,
+            height: imageSizes.height,
+          }
         });
 
         const idManager = Cookies.get("id_manager");
