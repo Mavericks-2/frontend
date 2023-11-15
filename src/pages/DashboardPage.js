@@ -222,7 +222,8 @@ function DashboardPage() {
                   fecha: formatFecha(item.fecha),
                   timestamp: item.timestamp.toFixed(1),
                 }))
-                .sort((a, b) => a.timestamp - b.timestamp)}
+                // .sort((a, b) => a.timestamp - b.timestamp)
+                }
               xField={"fecha"}
               yField={"timestamp"}
               color={"#8B0000"}
