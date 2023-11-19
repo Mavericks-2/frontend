@@ -1,4 +1,21 @@
-// RoutesPage.js
+/**
+ * @fileOverview Componente que maneja el routeo de la aplicación.
+ *
+ * @component RoutesPage
+ *
+ * @requires react
+ * @requires react-router-dom
+ * @requires ./UploadPlanogramPage
+ * @requires ./PlanogramModifierPage
+ * @requires ../components/Navbar
+ * @requires ./UserSignInPage
+ * @requires ../providers/ContextProvider
+ * @requires ./DashboardPage
+ * 
+ * @example
+ *  <RoutesPages />
+ * 
+ */
 
 import React, { Fragment, createContext } from "react";
 import { Routes, Route } from "react-router-dom";

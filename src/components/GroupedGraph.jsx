@@ -1,3 +1,21 @@
+/**
+ * @fileOverview Componente que renderiza un gráfico de barras agrupadas.
+ *
+ * @component GroupedGraph
+ *
+ * @requires react
+ * @requires @ant-design/plots
+ * @requires ../styles/LineGraphStyle.css
+ * 
+ * @param {array} data Datos a mostrar en el gráfico.
+ * @param {string} xField Nombre del eje X.
+ * @param {string} yField Nombre del eje Y.
+ * @param {string} seriesField Nombre del campo que agrupa las barras.
+ * 
+ * @example
+ *  <GroupedGraph data={data} xField="year" yField="value" seriesField="name" />
+ */
+
 import React, { useState, useEffect } from "react";
 import LineGraphStyle from "../styles/LineGraphStyle.css";
 import { Column } from "@ant-design/plots";

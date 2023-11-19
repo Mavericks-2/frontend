@@ -1,3 +1,27 @@
+/**
+ * @fileOverview Componente que maneja la información dentro de la aplicación.
+ *
+ * @component ContextProvider
+ * 
+ * @requires react
+ * @requires react-router-dom
+ * @requires react-toastify
+ * @requires js-cookie
+ * @requires ../assets/icon-sign.png
+ * @requires ../assets/oxxo_logo.png
+ * @requires ../styles/UserSignStyles.css
+ * @requires ../services/AuthenticationService
+ * @requires evergreen-ui
+ * 
+ * @param {string} type Tipo de inicio de sesión.
+ *
+ * @example
+ *  <ContextProvider>
+ *     Otros componentes...
+ *  </ContextProvider>
+ * 
+ */
+
 import React, { useEffect, useState } from "react";
 import { Context } from "../pages/RoutesPages";
 import Cookies from 'js-cookie';

@@ -1,11 +1,32 @@
-import FileUploadStyles from "../styles/FileUploadStyles.css";
-import { Pane, FileUploader, FileCard, Button } from "evergreen-ui";
+/**
+ * @fileOverview Componente que muestra la interfaz para subir un archivo.
+ *
+ * @component FileUpload
+ *
+ * @requires react
+ * @requires react-router-dom
+ * @requires evergreen-ui
+ * @requires src/pages/RoutesPages
+ * @requires js-cookie
+ * @requires react-toastify
+ * @requires react-toastify/dist/ReactToastify.css
+ * @requires src/styles/FileUploadStyles.css
+ * 
+ * 
+ * @example
+ *   <FileUpload />
+ * 
+ */
+
+
 import React, { useState, useCallback, useContext, useEffect } from "react";
-import { Context } from "../pages/RoutesPages";
 import { useNavigate, Link } from "react-router-dom";
+import { Pane, FileUploader, FileCard, Button } from "evergreen-ui";
+import { Context } from "../pages/RoutesPages";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import FileUploadStyles from "../styles/FileUploadStyles.css";
 
 function FileUpload() {
   const { userData, setUserData } = useContext(Context);

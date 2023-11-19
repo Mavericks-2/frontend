@@ -1,12 +1,32 @@
+/**
+ * @fileOverview Componente que renderiza una barra de navegación.
+ *
+ * @component Navbar
+ *
+ * @requires react
+ * @requires react-router-dom
+ * @requires react-toastify
+ * @requires js-cookie
+ * @requires src/assets/oxxo_logo.png
+ * @requires src/assets/user.png
+ * @requires src/assets/dashboard.png
+ * @requires src/styles/NavbarStyles.css
+ * 
+ * 
+ * @example
+ *   <Navbar />
+ * 
+ */
+
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import OxxoLogo from "../assets/oxxo_logo.png";
 import User from "../assets/user.png";
 import Dashboard from "../assets/dashboard.png";
-import NavbarStyles from "../styles/NavbarStyles.css";
-import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../pages/RoutesPages";
-import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
+import NavbarStyles from "../styles/NavbarStyles.css";
 
 
 function Navbar() {

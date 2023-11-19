@@ -1,3 +1,22 @@
+/**
+ * @fileOverview Componente que muestra la interfaz inicial del configurador de planogramas.
+ *
+ * @component PlanogramSquare
+ *
+ * @requires react
+ * @requires ../assets/gondola.jpeg
+ * @requires ../styles/PlanogramSquareStyles.css
+ * @requires ./PlanogramForms
+ * @requires ./PlanogramConfigurator
+ * @requires ../pages/RoutesPages
+ * 
+ * @param setFinalizado Función para actualizar el estado de finalización del formulario.
+ * 
+ * @example 
+ *  <PlanogramSquare setFinalizado={setFinalizado} />
+ * 
+ */
+
 import {
   Fragment,
   useEffect,

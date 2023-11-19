@@ -1,3 +1,19 @@
+/**
+ * @fileOverview Componente que renderiza un gráfico de tipo Gauge.
+ *
+ * @component GaugePlot
+ *
+ * @requires react
+ * @requires react-router-dom
+ * @requires @ant-design/plots
+ * 
+ * @param {array} data Datos a mostrar en el gráfico.
+ * 
+ * @example
+ *   <GaugePlot />
+ * 
+ */
+
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Gauge } from '@ant-design/plots';

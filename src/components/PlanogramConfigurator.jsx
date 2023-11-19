@@ -1,3 +1,24 @@
+/**
+ * @fileOverview Componente que maneja la configuración del planograma.
+ *
+ * @component PlanogramConfigurator
+ *
+ * @requires react
+ * @requires ../assets/gondola.jpeg
+ * @requires ../pages/RoutesPages
+ * 
+ * @param {number} rows Número de filas del planograma.
+ * @param {boolean} isRowsConfigured Indica si las filas ya fueron configuradas.
+ * @param {array} columnProducts Número de productos por columna.
+ * @param {boolean} finished Indica si la configuración del planograma ya terminó.
+ * @param {function} setRectangles Función que guarda los rectángulos del planograma.
+ *  
+ * @example
+ *  <PlanogramConfigurator rows={rows} isRowsConfigured={isRowsConfigured} columnProducts={columnProducts} finished={finished} setRectangles={setRectangles} />
+ * 
+ */
+
+
 import React, { useRef, useState, useEffect, useContext } from "react";
 import Gondola from "../assets/gondola.jpeg";
 import { Context } from "../pages/RoutesPages";

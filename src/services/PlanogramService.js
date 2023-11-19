@@ -1,4 +1,24 @@
+/**
+ * @fileOverview Declaración de funciones para el manejo de registro de planogramas.
+ *
+ * @requires ../config
+ * 
+ * @exports postPlanogram
+ * @exports postPlanogramProducts
+ * @exports postPlanogramModel
+ * 
+ * 
+ */
+
 import { API_BASE_URL, FLASK_BASE_URL } from "../config";
+
+/**
+ * 
+ * Llamada a la API para registrar un planograma.
+ * 
+ * @param {object} planogramData Información del planograma a registrar.
+ * @returns {string} Mensaje de éxito o error.
+ */
 
 export async function postPlanogram(planogramData) {
   const bodyPlanogramData = {
@@ -25,6 +45,14 @@ export async function postPlanogram(planogramData) {
   return validatePlanogram;
 }
 
+/**
+ * 
+ * Llamada a la API para clasificar los productos de un planograma.
+ * 
+ * @param {object} planogramData Información del planograma a registrar.
+ * @returns {array} Arreglo de productos clasificados.
+ */
+
 export async function postPlanogramProducts(planogramData) {
   const bodyPlanogramData = {
     data: {
@@ -47,6 +75,14 @@ export async function postPlanogramProducts(planogramData) {
   });
   return validatePlanogramProducts;
 }
+
+/**
+ * 
+ * Llamada a la API para registrar la imagen de un planograma en el modelo.
+ * 
+ * @param {object} planogramData Información del planograma a registrar.
+ * @returns {string} Mensaje de éxito o error.
+ */
 
 export async function postPlanogramModel(planogramData) {
   const blob = await fetch(planogramData.imagen).then((r) => r.blob());
@@ -101,6 +137,14 @@ const getBase64 = (imageFile) => {
     reader.readAsDataURL(imageFile);
   });
 };
+
+/**
+ * 
+ * Llamada a la API para registrar la imagen de un planograma.
+ * 
+ * @param {object} planogramData Información del planograma a registrar.
+ * @returns {string} URL de la imagen registrada. 
+ */
 
 export async function postPlanogramImage(planogramData) {
   const blob = await fetch(planogramData.imagen).then((r) => r.blob());

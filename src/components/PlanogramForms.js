@@ -1,14 +1,54 @@
-import PlanogramFormsStyles from "../styles/PlanogramFormsStyles.css";
+/**
+ * @fileOverview Componente que maneja el formulario de configuración del planograma.
+ *
+ * @component PlanogramForms
+ *
+ * @requires react
+ * @requires react-toastify
+ * @requires js-cookie
+ * @requires src/pages/RoutesPages
+ * @requires src/services/PlanogramService
+ * @requires src/styles/PlanogramFormsStyles.css
+ * 
+ * @param {Array} rows Número de estantes.
+ * @param {boolean} isRowsConfigured Indica si el número de estantes ya fue configurado.
+ * @param {Array} columnProducts Número de productos por estante.
+ * @param {boolean} finished Indica si el formulario ya fue completado.
+ * @param {Array} rectangles Arreglo de rectángulos que representan los productos.
+ * @param {function} setRows Función para actualizar el número de estantes.
+ * @param {function} setIsRowsConfigured Función para actualizar el estado de configuración de estantes.
+ * @param {function} setColumnProducts Función para actualizar el número de productos por estante.
+ * @param {function} setFinished Función para actualizar el estado de finalización del formulario.
+ * @param {function} setRectangles Función para actualizar el arreglo de rectángulos.
+ * 
+ *  
+ * @example
+ *  <PlanogramForms 
+ *   rows={rows}
+ *   isRowsConfigured={isRowsConfigured}
+ *   columnProducts={columnProducts}
+ *   finished={finished}
+ *   rectangles={rectangles}
+ *   setRows={setRows}
+ *   setIsRowsConfigured={setIsRowsConfigured}
+ *   setColumnProducts={setColumnProducts}
+ *   setFinished={setFinished}
+ *   setRectangles={setRectangles}
+ *   />
+ * 
+ */
+
 import { useEffect, useContext } from "react";
-import { postPlanogram } from "../services/PlanogramService";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
+import { Context } from "../pages/RoutesPages";
 import {
   postPlanogramModel,
   postPlanogramProducts,
   postPlanogramImage,
+  postPlanogram
 } from "../services/PlanogramService";
-import { Context } from "../pages/RoutesPages";
-import { toast } from "react-toastify";
-import Cookies from "js-cookie";
+import PlanogramFormsStyles from "../styles/PlanogramFormsStyles.css";
 
 function PlanogramForms(props) {
   const { linePositionsContext, imageSizes } = useContext(Context);

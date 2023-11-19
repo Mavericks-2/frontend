@@ -1,7 +1,22 @@
+/**
+ * @fileOverview Componente que muestra la interfaz final del configurador.
+ *
+ * @component Finalizado
+ *
+ * @requires react
+ * @requires react-router-dom
+ * @requires src/styles/PlanogramSquareStyles.css
+ * @requires src/styles/FinalizadoStyles.css
+ * 
+ * @example
+ *   <Finalizado />
+ * 
+ */
+
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PlanogramSquareStyles from "../styles/PlanogramSquareStyles.css";
 import FinalizadoStyles from "../styles/FinalizadoStyles.css";
-import { useNavigate } from 'react-router-dom';
 
 
 function Finalizado() {

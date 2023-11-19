@@ -1,4 +1,25 @@
+/**
+ * @fileOverview Declaración de funciones para el manejo de autenticación de usuarios.
+ *
+ * @requires ../config
+ * 
+ * @exports signUp
+ * @exports signIn
+ * @exports verifyCode
+ * @exports getUser
+ * 
+ */
+
 import { API_BASE_URL } from "../config";
+
+
+/**
+ * 
+ * Llamada a la API para registrar un usuario.
+ * 
+ * @param {object} userInfo Información del usuario a registrar.
+ * @returns {string} Mensaje de éxito o error.
+ */
 
 export async function signUp(userInfo) {
   const bodyUserData = {
@@ -20,6 +41,14 @@ export async function signUp(userInfo) {
   return validateSignup;
 }
 
+/**
+ * 
+ * Llamada a la API para iniciar sesión.
+ * 
+ * @param {object} userInfo Información del usuario a registrar.
+ * @returns {string} Token de sesión.
+ */
+
 export async function signIn(userInfo) {
   const bodyUserData = {
     email: userInfo.email,
@@ -38,6 +67,14 @@ export async function signIn(userInfo) {
   return validateToken;
 }
 
+/**
+ * 
+ * Llamada a la API para verificar el código de verificación.
+ * 
+ * @param {object} verifyUserData Información del usuario a registrar.
+ * @returns {string} Mensaje de éxito o error.
+ */
+
 export async function verifyCode(verifyUserData) {
   const bodyVerifyData = {
     email: verifyUserData.email,
@@ -55,6 +92,14 @@ export async function verifyCode(verifyUserData) {
   });
   return validateVerification;
 }
+
+/**
+ * 
+ * Llamada a la API para obtener información del usuario.
+ * 
+ * @param {object} userInfo Información del usuario a buscar.
+ * @returns {object} Información del usuario.
+ */
 
 export async function getUser(userInfo) {
   const bodyUserData = {

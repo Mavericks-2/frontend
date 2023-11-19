@@ -1,3 +1,21 @@
+/**
+ * @fileOverview Componente que renderiza un gráfico de pastel.
+ *
+ * @component PieGraph
+ *
+ * @requires react
+ * @requires @ant-design/charts
+ * @requires ../styles/LineGraphStyle.css
+ * 
+ * @param {array} data Datos a mostrar en el gráfico.
+ * @param {string} xField Nombre del eje X.
+ * @param {string} yField Nombre del eje Y.
+ * 
+ * @example
+ *   <PieGraph data={data} xField="year" yField="value" />
+ * 
+ */
+
 import React from 'react';
 import LineGraphStyle from "../styles/LineGraphStyle.css";
 import { Pie } from "@ant-design/charts";

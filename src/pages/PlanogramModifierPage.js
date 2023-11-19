@@ -1,3 +1,18 @@
+/**
+ * @fileOverview Componente que maneja el componente a mostrar para los procesos de configuración de planograma.
+ *
+ * @component PlanogramModifierPage
+ *
+ * @requires react
+ * @requires ../components/PlanogramSquare
+ * @requires ../components/Finalizado
+ * @requires ../components/Navbar
+ * 
+ * @example
+ *  <PlanogramModifierPage />
+ * 
+ */
+
 import PlanogramSquare from '../components/PlanogramSquare';
 import Finalizado from '../components/Finalizado';
 import Navbar from "../components/Navbar";

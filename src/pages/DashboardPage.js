@@ -1,3 +1,22 @@
+/**
+ * @fileOverview Componente que muestra la interfaz de visualización de gráficos.
+ *
+ * @component DashboardPage
+ *
+ * @requires react
+ * @requires ../components/Navbar
+ * @requires ../services/StatusService
+ * @requires ../components/ColumnGraph
+ * @requires ../components/PieGraph
+ * @requires ../components/LineGraph
+ * @requires ../components/GaugePlot
+ * @requires ../components/GroupedGraph
+ * @requires ../styles/DashboardsStyle.css
+ * 
+ * @example
+ *  <DashboardPage />
+ */
+
 import Navbar from "../components/Navbar";
 import { Fragment, useEffect, useState } from "react";
 import {

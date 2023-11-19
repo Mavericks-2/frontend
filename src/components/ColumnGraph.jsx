@@ -1,6 +1,31 @@
+/**
+ * @fileOverview Componente para mostrar un gráfico de barras.
+ *
+ * @component ColumnGraph
+ *
+ * @requires react
+ * @requires @ant-design/charts
+ * @requires src/styles/LineGraphStyle.css
+ * 
+ * @param {array} data Datos a mostrar en el gráfico.
+ * @param {string} xField Nombre del campo que se va a mostrar en el eje X.
+ * @param {string} yField Nombre del campo que se va a mostrar en el eje Y.
+ * @param {string} color Color de la barra.
+ * 
+ * 
+ * @example
+ *   <ColumnGraph
+        data={[{ timestamp: "2021-01-01", conteo: 1 }]}
+        xField={"fecha"}
+        yField={"conteo"}
+        color={"orange"}
+      />
+ * 
+ */
+
 import React from "react";
-import LineGraphStyle from "../styles/LineGraphStyle.css";
 import { Column } from "@ant-design/charts";
+import LineGraphStyle from "../styles/LineGraphStyle.css";
 
 function ColumnGraph(props) {
   const data = props.data ? props.data : [

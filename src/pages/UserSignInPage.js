@@ -1,3 +1,25 @@
+/**
+ * @fileOverview Componente que maneja el flujo de inicio de sesión y registro de usuarios.
+ *
+ * @component UserSignInPage
+ * 
+ * @requires react
+ * @requires react-router-dom
+ * @requires react-toastify
+ * @requires js-cookie
+ * @requires ../assets/icon-sign.png
+ * @requires ../assets/oxxo_logo.png
+ * @requires ../styles/UserSignStyles.css
+ * @requires ../services/AuthenticationService
+ * @requires evergreen-ui
+ * 
+ * @param {string} type Tipo de inicio de sesión.
+ *
+ * @example
+ *  <UserSignInPage type={"Registrarse"} />
+ * 
+ */
+
 import React, { Fragment, useState, useEffect } from "react";
 import "../styles/UserSignStyles.css";
 import icon from "../assets/icon-sign.png";
