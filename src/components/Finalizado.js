@@ -30,10 +30,8 @@ function Finalizado() {
             <div className='finalizado-container--body'>
                 <p className='finalizado-container-body-text'>Gracias por utilizar el configurador</p>
             </div>
-            <div className='finalizado-button' onClick={()=>{
-                navigation('/')
-            }}>
-                <p>Volver</p>
+            <div className='finalizado-button'>
+                <p><a href='/'>Volver</a></p>
             </div>
         </div>
     </div>

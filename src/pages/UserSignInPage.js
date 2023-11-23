@@ -122,7 +122,7 @@ function UserSignInPage(props) {
       },
       {
         pending: "Accediendo a tu cuenta...",
-        success: "Acceso correcto a tu cuenta. Redireccionando...",
+        success: "Datos ingresados correctamente.",
         error: "Error al acceder a tu cuenta. Inténtalo de nuevo.",
       },
       {

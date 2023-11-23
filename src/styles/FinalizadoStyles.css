@@ -44,3 +44,8 @@
     margin: 0;
     padding: 0;
 }
+
+.finalizado-button > p > a{
+    text-decoration: none;
+    color: #FFFFFF;
+}
