@@ -1,3 +1,5 @@
+import FileUploadStyles from "../styles/FileUploadStyles.css";
+
 /**
  * @fileOverview Componente que muestra la interfaz para subir un archivo.
  *
@@ -26,7 +28,6 @@ import { Context } from "../pages/RoutesPages";
 import Cookies from "js-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import FileUploadStyles from "../styles/FileUploadStyles.css";
 
 function FileUpload() {
   const { userData, setUserData } = useContext(Context);
