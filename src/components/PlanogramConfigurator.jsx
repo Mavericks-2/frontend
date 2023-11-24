@@ -269,6 +269,14 @@ function PlanogramConfigurator(props) {
     let row = 0;
     let column = 0;
 
+    columnLines.sort((a, b) => {
+      if (a.row === b.row) {
+        return a.x1 - b.x1;
+      } else {
+        return a.row - b.row;
+      }
+    });
+
     for (let i = 0; i < columnLines.length; i++) {
       if (columnLines[i].row !== row) {
         // create a rectangle
