@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import TeamSection from "../components/TeamSection";
 import LandingStyles from "../styles/LandingStyles.css";
 
 function Landing() {
@@ -29,7 +30,7 @@ function Landing() {
       </div>
 
       <div className="landing-about-us" id="objetivo">
-        <div className="about-us-text">
+        <div className="about-us-text partial-viewport">
           <h2 className="title">Nuestro objetivo</h2>
           <p className="description">
             Estamos en busca de una innovación significativa en la configuración
@@ -58,12 +59,11 @@ function Landing() {
           </a>
         </div>
       </div>
+
       <div className="landing-about-us" id="equipo">
-        <div className="about-us-text">
+        <div className="about-us-text total-viewport">
           <h2 className="title">Equipo</h2>
-          <p className="description">
-            
-          </p>
+          <TeamSection />
         </div>
       </div>
     </Fragment>

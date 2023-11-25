@@ -114,9 +114,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     background-color: #fff;
+  }
+
+  .total-viewport {
+    width: 100vw;
+  }
+
+  .partial-viewport {
+    width: 80vw;
   }
 
 
@@ -125,15 +133,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    height: 100vh;
-    width: 80vw;
-    gap: 2rem;
+    min-height: 100vh;
+    gap: 1rem; 
   }
+
 
   .landing-about-us > .about-us-text > .title {
     font-size: 45px;
     font-weight: 700;
-    margin-bottom: 16px;
     text-align: center;
     width: 100%;
     color: #E21C2A;
