@@ -9,26 +9,22 @@
  * @requires ./PlanogramForms
  * @requires ./PlanogramConfigurator
  * @requires ../pages/RoutesPages
- * 
+ *
  * @param setFinalizado Función para actualizar el estado de finalización del formulario.
- * 
- * @example 
+ *
+ * @example
  *  <PlanogramSquare setFinalizado={setFinalizado} />
- * 
+ *
  */
 
-import {
-  Fragment,
-  useEffect,
-  useState,
-  useContext,
-  useRef,
-} from "react";
+import { Fragment, useEffect, useState, useContext, useRef } from "react";
 import PlanogramSquareStyles from "../styles/PlanogramSquareStyles.css";
 import Gondola from "../assets/gondola.jpeg";
 import PlanogramForms from "./PlanogramForms";
 import PlanogramConfigurator from "./PlanogramConfigurator";
+import ValidatePlanogram from "./ValidatePlanogram";
 import { Context } from "../pages/RoutesPages";
+import { Select } from "evergreen-ui";
 
 function PlanogramSquare(props) {
   const { uploadedFile, imageSizes } = useContext(Context);
@@ -38,11 +34,15 @@ function PlanogramSquare(props) {
   const [columnProducts, setColumnProducts] = useState([]);
   const [rectangles, setRectangles] = useState([]);
   const [finished, setFinished] = useState(false);
+  const [validateClassification, setValidateClassification] = useState(false);
+  const [planogramData, setPlanogramData] = useState(null);
   const imageDiv = useRef(null);
 
   useEffect(() => {
-    if (imageDiv.current){
-      imageDiv.current.style.backgroundImage = `url(${uploadedFile ? URL.createObjectURL(uploadedFile) : Gondola})`;
+    if (imageDiv.current) {
+      imageDiv.current.style.backgroundImage = `url(${
+        uploadedFile ? URL.createObjectURL(uploadedFile) : Gondola
+      })`;
     }
   }, [uploadedFile]);
 
@@ -54,54 +54,84 @@ function PlanogramSquare(props) {
     }
   }, [rows]);
   
+  const productLabels = [
+    "Cheetos Torciditos",
+    "Chips Jalapeño",
+    "Churrumais",
+    "Doritos Nachos",
+    "Fritos Limon y Sal",
+    "Hut Nuts",
+    "Pop Karameladas",
+    "Rancheritos",
+    "Ruffles Queso",
+    "Runners",
+    "Takis Fuego",
+    "Takis Original",
+    "Tostitos",
+  ];
+
   return (
     <div className="PlanogramSquare">
-      <h1>¿Estás listo para subir la configuración?</h1>
-      <div
-        style={{
-          width: imageSizes.width,
-          height: imageSizes.height,
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-        }}
-        ref={imageDiv}
-      >
-        <PlanogramConfigurator
-          rows={rows}
-          isRowsConfigured={isRowsConfigured}
-          columnProducts={columnProducts}
-          setRectangles={setRectangles}
-          finished={finished}
-          uploadedFile={uploadedFile}
+      {validateClassification ? (
+        <ValidatePlanogram
+          setFinalizado={props.setFinalizado}
+          planogramData={planogramData}
+          setPlanogramData={setPlanogramData}
+          labels={productLabels}
         />
-      </div>
-      {showForm ? (
-        <Fragment>
-          <PlanogramForms
-            rows={rows}
-            setRows={setRows}
-            isRowsConfigured={isRowsConfigured}
-            setIsRowsConfigured={setIsRowsConfigured}
-            columnProducts={columnProducts}
-            setColumnProducts={setColumnProducts}
-            rectangles={rectangles}
-            setFinished={setFinished}
-            imagen={uploadedFile ? URL.createObjectURL(uploadedFile) : Gondola}
-            imageType={uploadedFile ? uploadedFile.type : "image/jpeg"}
-            setFinalizado={props.setFinalizado}
-          />
-        </Fragment>
       ) : (
         <Fragment>
-          <a
-            onClick={() => {
-              setShowForm(true);
+          <h1>¿Estás listo para subir la configuración?</h1>
+          <div
+            style={{
+              width: imageSizes.width,
+              height: imageSizes.height,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
             }}
+            ref={imageDiv}
           >
-            <button>
-              <h2>Comenzar</h2>
-            </button>
-          </a>
+            <PlanogramConfigurator
+              rows={rows}
+              isRowsConfigured={isRowsConfigured}
+              columnProducts={columnProducts}
+              setRectangles={setRectangles}
+              finished={finished}
+              uploadedFile={uploadedFile}
+            />
+          </div>
+          {showForm ? (
+            <Fragment>
+              <PlanogramForms
+                rows={rows}
+                setRows={setRows}
+                isRowsConfigured={isRowsConfigured}
+                setIsRowsConfigured={setIsRowsConfigured}
+                columnProducts={columnProducts}
+                setColumnProducts={setColumnProducts}
+                rectangles={rectangles}
+                setFinished={setFinished}
+                imagen={
+                  uploadedFile ? URL.createObjectURL(uploadedFile) : Gondola
+                }
+                imageType={uploadedFile ? uploadedFile.type : "image/jpeg"}
+                setFinalizado={setValidateClassification}
+                setPlanogramData={setPlanogramData}
+              />
+            </Fragment>
+          ) : (
+            <Fragment>
+              <a
+                onClick={() => {
+                  setShowForm(true);
+                }}
+              >
+                <button>
+                  <h2>Comenzar</h2>
+                </button>
+              </a>
+            </Fragment>
+          )}
         </Fragment>
       )}
     </div>

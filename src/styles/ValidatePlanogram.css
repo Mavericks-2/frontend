@@ -1,0 +1,55 @@
+.validatePlanogramContainer{
+  display: flex;   
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.estanteContainer{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+.estanteHeader{
+    color: black;
+    font-weight: 800;
+    font-size: 24;
+}
+
+.productContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.productHeader{
+    color: black;
+    font-weight: 600;
+    font-size: 12;
+}
+
+.clasificacionContainer{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.validatePlanogramButton{
+    background: linear-gradient(270deg, #E21C2A 0%, #F0A929 100%);
+    color: white;
+    font-size: 24;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+    cursor: pointer;
+}

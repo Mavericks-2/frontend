@@ -46,7 +46,6 @@ import {
   postPlanogramModel,
   postPlanogramProducts,
   postPlanogramImage,
-  postPlanogram
 } from "../services/PlanogramService";
 import PlanogramFormsStyles from "../styles/PlanogramFormsStyles.css";
 
@@ -56,7 +55,6 @@ function PlanogramForms(props) {
   useEffect(() => {
     if (props.rectangles.length > 0) {
       post();
-      props.setFinalizado(true);
     }
   }, [props.rectangles]);
 
@@ -86,11 +84,11 @@ function PlanogramForms(props) {
           url_imagen: url_imagen,
           coordenadas: { coordenadas: props.rectangles },
           id_manager: idManager,
-          matriz_productos: { productos: matriz_productos },
+          matriz_productos: { productos: [...matriz_productos] },
           lineas: linePositionsContext,
         };
-
-        await postPlanogram(planogramData);
+        props.setPlanogramData(planogramData);
+        props.setFinalizado(true);
       },
       {
         pending: "Creando planograma",
