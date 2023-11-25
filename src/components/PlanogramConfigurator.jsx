@@ -6,18 +6,17 @@
  * @requires react
  * @requires ../assets/gondola.jpeg
  * @requires ../pages/RoutesPages
- * 
+ *
  * @param {number} rows Número de filas del planograma.
  * @param {boolean} isRowsConfigured Indica si las filas ya fueron configuradas.
  * @param {array} columnProducts Número de productos por columna.
  * @param {boolean} finished Indica si la configuración del planograma ya terminó.
  * @param {function} setRectangles Función que guarda los rectángulos del planograma.
- *  
+ *
  * @example
  *  <PlanogramConfigurator rows={rows} isRowsConfigured={isRowsConfigured} columnProducts={columnProducts} finished={finished} setRectangles={setRectangles} />
- * 
+ *
  */
-
 
 import React, { useRef, useState, useEffect, useContext } from "react";
 import Gondola from "../assets/gondola.jpeg";
@@ -31,10 +30,10 @@ function PlanogramConfigurator(props) {
   const [canvas, setCanvas] = useState(null);
   const [RowsDrawings, setRowsDrawings] = useState([]);
   const [columnDrawings, setColumnDrawings] = useState([]);
-  const { setLinePositionsContext, imageSizes }  = useContext(Context);
+  const [columnArray, setColumnArray] = useState([]);
+  const { setLinePositionsContext, imageSizes } = useContext(Context);
   let isDrawing = false;
   let selectedLine = null;
-  
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -76,7 +75,7 @@ function PlanogramConfigurator(props) {
       props.setRectangles(convertLinesToRectangles());
     }
   }, [props.finished]);
-  
+
   const initializeRows = (rows) => {
     // add 1 to number rows
     rows++;
@@ -100,40 +99,52 @@ function PlanogramConfigurator(props) {
     rowYPositions.unshift(0);
     rowYPositions.push(canvas.height);
     rowYPositions.sort((a, b) => a - b);
-    
+
     // eliminate first and last position
     rowYPositions.shift();
     rowYPositions.pop();
 
     if (props.rows > 0) {
       let numColumnsByRow = props.columnProducts;
-      let columnDrawings = [];
+      let newColumnDrawings = [];
+      let newColumnArray = [];
 
       for (let i = 0; i <= props.rows; i++) {
         // Se define el ancho de cada columna
         let columnWidth = canvas.width / (numColumnsByRow[i] + 2);
+        let rowColumnDrawings = [];
+        if (
+          columnArray[i] &&
+          columnArray[i].length === numColumnsByRow[i] + 1
+        ) {
+          rowColumnDrawings = [...columnArray[i]];
+        } else {
+          // Se define la posición previa de la columna
+          prev = 0;
 
-        // Se define la posición previa de la columna
-        prev = 0;
+          for (let j = 0; j < numColumnsByRow[i] + 1; j++) {
+            let startX = (j + 1) * columnWidth;
+            let startY = rowYPositions[i];
+            let endY = rowYPositions[i + 1];
 
-        for (let j = 0; j < numColumnsByRow[i] + 1; j++) {
-          let startX = (j+1) * columnWidth;
-          let startY = rowYPositions[i];
-          let endY = rowYPositions[i + 1];
-
-          // Se agregan las columnas a la lista
-          columnDrawings.push({
-            x: startX,
-            y: startY,
-            width: 0,
-            height: endY - startY,
-            prev: prev,
-            row: i,
-          });
-          prev = startX;
+            // Se agregan las columnas a la lista
+            let columnDrawing = {
+              x: startX,
+              y: startY,
+              width: 0,
+              height: endY - startY,
+              prev: prev,
+              row: i,
+            };
+            rowColumnDrawings.push(columnDrawing);
+            prev = startX;
+          }
         }
+        newColumnArray.push(rowColumnDrawings);
+        newColumnDrawings = [...newColumnDrawings, ...rowColumnDrawings];
       }
-      setColumnDrawings(columnDrawings);
+      setColumnDrawings(newColumnDrawings);
+      setColumnArray(newColumnArray);
     }
   };
 
@@ -304,7 +315,6 @@ function PlanogramConfigurator(props) {
       width: canvas.width - prev.x1,
       height: canvas.height - prev.y1,
     });
-    
 
     // Maintain rectangles close to the canvas borders
     rectangles = rectangles.filter(
@@ -315,17 +325,16 @@ function PlanogramConfigurator(props) {
         rect.y + rect.height !== canvas.height
     );
 
-
     return rectangles;
   };
 
   return (
     <canvas
       id="planogram-configurator"
-      width= {imageSizes.width}
-      height= {imageSizes.height}
+      width={imageSizes.width}
+      height={imageSizes.height}
       ref={canvasRef}
-      style={{background: "transparent"}}
+      style={{ background: "transparent" }}
       onMouseDown={onMouseDownGeneral}
       onMouseMove={onMouseMoveGeneral}
       onMouseUp={onMouseUpGeneral}
