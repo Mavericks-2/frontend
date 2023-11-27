@@ -47,7 +47,7 @@ function Landing() {
             sustancial en la eficiencia operativa al{" "}
             <b>reducir el tiempo dedicado</b> a la configuración de planogramas,
             una mayor capacidad de <b>adaptación a los cambios</b> del mercado y
-            una <b>optimización</b>
+            una <b>optimización </b>
             general de las ventas al mejorar la disposición de productos para
             maximizar la visibilidad y la atracción del cliente. Con esta
             iniciativa, aspiramos a proporcionar a <b>OXXO</b> una herramienta
