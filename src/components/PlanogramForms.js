@@ -86,6 +86,7 @@ function PlanogramForms(props) {
           id_manager: idManager,
           matriz_productos: { productos: [...matriz_productos] },
           lineas: linePositionsContext,
+          accuracy: 100,
         };
         props.setPlanogramData(planogramData);
         props.setFinalizado(true);

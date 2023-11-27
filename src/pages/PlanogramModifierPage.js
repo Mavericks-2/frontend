@@ -20,11 +20,13 @@ import React, { useState } from 'react';
 
 function PlanogramModifierPage() {
   const [finalizado, setFinalizado] = useState(false);
+  const [accuracy, setAccuracy] = useState(0);
+
   return (
     <>
       <Navbar />
       {
-        finalizado ? <Finalizado /> : <PlanogramSquare setFinalizado={setFinalizado} />
+        finalizado ? <Finalizado accuracy={accuracy} /> : <PlanogramSquare setFinalizado={setFinalizado} setAccuracy={setAccuracy} />
       }
     </>
   );

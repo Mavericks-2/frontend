@@ -28,6 +28,7 @@ export async function postPlanogram(planogramData) {
     id_manager: planogramData.id_manager,
     matriz_productos: planogramData.matriz_productos,
     lineas: planogramData.lineas,
+    accuracy: planogramData.accuracy,
   };
   const validatePlanogram = await fetch(
     `${API_BASE_URL}/planogram/postPlanogramConfig`,

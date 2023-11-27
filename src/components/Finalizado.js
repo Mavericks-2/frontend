@@ -19,13 +19,16 @@ import PlanogramSquareStyles from "../styles/PlanogramSquareStyles.css";
 import FinalizadoStyles from "../styles/FinalizadoStyles.css";
 
 
-function Finalizado() {
+function Finalizado(props) {
     const navigation = useNavigate();
   return (
     <div className='PlanogramSquare'>
         <div className='finalizado-container'>
             <div className='finalizado-container--header'>
                 <p className='finalizado-container-header-title'>¡Listo!</p>
+            </div>
+            <div>
+                <p className='finalizado-container-body-text'>El porcentaje de exactitud de la clasificación fue de {props.accuracy}%</p>
             </div>
             <div className='finalizado-container--body'>
                 <p className='finalizado-container-body-text'>Gracias por utilizar el configurador</p>

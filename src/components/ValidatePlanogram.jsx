@@ -9,9 +9,15 @@ function ValidatePlanogram(props) {
   const [actualMatrizProductos, setActualMatrizProductos] = useState([]);
   const imageDiv = React.createRef();
 
+  useEffect(() => {
+    console.log("r", props.planogramData); 
+    console.log("a", actualMatrizProductos)
+  }
+  , [actualMatrizProductos]);
 
   useEffect(() => {
-    setActualMatrizProductos([...props.planogramData.matriz_productos.productos]);
+    setActualMatrizProductos(JSON.parse(JSON.stringify(props.planogramData.matriz_productos.productos)));
+    // setActualMatrizProductos([...props.planogramData.matriz_productos.productos]);
   }, [props.planogramData]);
 
   useEffect(() => {
@@ -25,6 +31,23 @@ function ValidatePlanogram(props) {
     const handleValidatePlanogram = async () => {
       toast.promise( async () => {
         try {
+
+          let accuracy = 0;
+          let totalProducts = 0;
+          for (let i = 0; i < actualMatrizProductos.length; i++) {
+            for (let j = 0; j < actualMatrizProductos[i].length; j++) {
+              if (props.planogramData.matriz_productos.productos[i][j] === actualMatrizProductos[i][j]) {
+                accuracy++;
+              }
+              totalProducts++;
+            }
+          }
+          accuracy = (accuracy / totalProducts) * 100;
+          props.setAccuracy(accuracy);
+
+          props.planogramData.matriz_productos.productos = actualMatrizProductos;
+          props.planogramData.accuracy = accuracy;
+
           const response = postPlanogram(props.planogramData).then((response) => {
             if (response === 'ok') {
               props.setFinalizado(true);
@@ -37,6 +60,7 @@ function ValidatePlanogram(props) {
           });
           return response;
         } catch (error) {
+          console.log("error", error);
           throw error;
         }
       },
@@ -67,7 +91,7 @@ function ValidatePlanogram(props) {
             <p key={`estante-p-${rowProducts}`} className="estanteHeader">Estante {rowIndex + 1}</p>
             {rowProducts.map((productClassification, columnIndex) => {
               return (
-                <div key={`product-container-${productClassification}`} className="productContainer">
+                <div key={`product-container-${columnIndex}-${rowIndex}`} className="productContainer">
                   <p key={`p-${columnIndex}`} className="productHeader">Producto {columnIndex + 1}</p>
                   <Select key={`select-${columnIndex}`} value={productClassification} onChange={(e)=>{
                     actualMatrizProductos[rowIndex][columnIndex] = parseInt(e.target.value);
