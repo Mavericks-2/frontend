@@ -31,7 +31,7 @@ function Finalizado() {
                 <p className='finalizado-container-body-text'>Gracias por utilizar el configurador</p>
             </div>
             <div className='finalizado-button'>
-                <p><a href='/'>Volver</a></p>
+                <p><a href='/home'>Volver</a></p>
             </div>
         </div>
     </div>

@@ -78,6 +78,7 @@ function PlanogramSquare(props) {
           planogramData={planogramData}
           setPlanogramData={setPlanogramData}
           labels={productLabels}
+          imagen={ uploadedFile }
         />
       ) : (
         <Fragment>

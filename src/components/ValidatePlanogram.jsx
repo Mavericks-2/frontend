@@ -2,14 +2,25 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Select } from "evergreen-ui";
 import "../styles/ValidatePlanogram.css";
 import { postPlanogram } from "../services/PlanogramService";
+import Gondola from "../assets/gondola.jpeg";
 import { toast } from "react-toastify";
 
 function ValidatePlanogram(props) {
   const [actualMatrizProductos, setActualMatrizProductos] = useState([]);
+  const imageDiv = React.createRef();
+
 
   useEffect(() => {
     setActualMatrizProductos([...props.planogramData.matriz_productos.productos]);
   }, [props.planogramData]);
+
+  useEffect(() => {
+    if (imageDiv.current) {
+      imageDiv.current.style.backgroundImage = `url(${
+        props.imagen ? URL.createObjectURL(props.imagen) : Gondola
+      })`;
+    }
+  }, [props.imagen]);
 
     const handleValidatePlanogram = async () => {
       toast.promise( async () => {
@@ -46,6 +57,9 @@ function ValidatePlanogram(props) {
   return (
     <div className="validatePlanogramContainer">
         <h2>Validación de la clasificación</h2>
+        <div className="validate-imagenSubida" style={{ backgroundSize: "contain",
+              backgroundRepeat: "no-repeat"}} ref={imageDiv}>
+        </div>
         <div className="clasificacionContainer">      
       {actualMatrizProductos ? actualMatrizProductos.map((rowProducts, rowIndex) => {
         return (

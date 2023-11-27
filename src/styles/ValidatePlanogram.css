@@ -53,3 +53,8 @@
     margin-top: 12px;
     cursor: pointer;
 }
+
+.validate-imagenSubida{
+    width: 250px;
+    height: 250px;
+}

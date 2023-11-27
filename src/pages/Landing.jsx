@@ -22,7 +22,7 @@ function Landing() {
             <a href="#objetivo" className="call-to-action">
               Conoce más
             </a>
-            <a href="#" className="call-to-action">
+            <a href="/home" className="call-to-action">
               Descubre cómo
             </a>
           </div>

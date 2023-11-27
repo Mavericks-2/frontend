@@ -34,8 +34,8 @@ function RoutesPage() {
     <Fragment>
       <ContextProvider>
         <Routes>
-          <Route path="/" element={<UploadPlanogramPage />} />
-          <Route path="/landing" element={<Landing />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/home" element={<UploadPlanogramPage />} />
           <Route path="/planogram" element={<PlanogramModifierPage />} />
           <Route path="/login" element={<UserSignInPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />

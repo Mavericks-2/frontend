@@ -81,7 +81,7 @@ function UserSignInPage(props) {
           }
 
           // TODO: Redireccionar a página de inicio
-          navigate("/");
+          navigate("/home");
           // Guardar token en cookies
           Cookies.set("userToken", signInResponse);
           Cookies.set("name", userInfo.name);
@@ -117,7 +117,7 @@ function UserSignInPage(props) {
           Cookies.set("awsCognitoId", userData.awsCognitoId);
           Cookies.set("id_manager", userData.id_manager);
           // TODO: Redireccionar a página de inicio
-          navigate("/");
+          navigate("/home");
         }
       },
       {
