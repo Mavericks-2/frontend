@@ -126,3 +126,18 @@ export async function postPlanogramImage(planogramData) {
 
   return url;
 }
+export async function getAccuracy(){
+    const response = await fetch(`${API_BASE_URL}/planogram/getAccuracy`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+    });
+    if (response.status === 201) {
+        const data = await response.json();
+        return data;
+    }else {
+    throw new Error("Error getting accuracy");
+    }
+  }
+
