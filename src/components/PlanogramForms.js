@@ -112,7 +112,7 @@ function PlanogramForms(props) {
   return (
     <div className="PlanogramForms">
       <div className="InputBlock">
-        <p>Número de Estantes</p>
+        <p>Número de Repisas</p>
         <input
           type="number"
           style={{ textAlign: "center" }}
@@ -131,7 +131,7 @@ function PlanogramForms(props) {
           }}
         >
           <button>
-            <h2>Acomodar estantes para continuar</h2>
+            <h2>Acomodar repisas para continuar</h2>
           </button>
         </a>
       ) : null}

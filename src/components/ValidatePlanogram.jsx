@@ -88,7 +88,7 @@ function ValidatePlanogram(props) {
       {actualMatrizProductos ? actualMatrizProductos.map((rowProducts, rowIndex) => {
         return (
           <div key={rowIndex} className="estanteContainer">
-            <p key={`estante-p-${rowProducts}`} className="estanteHeader">Estante {rowIndex + 1}</p>
+            <p key={`estante-p-${rowProducts}`} className="estanteHeader">Repisa {rowIndex + 1}</p>
             {rowProducts.map((productClassification, columnIndex) => {
               return (
                 <div key={`product-container-${columnIndex}-${rowIndex}`} className="productContainer">
