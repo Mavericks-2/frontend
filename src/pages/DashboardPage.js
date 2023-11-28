@@ -24,6 +24,7 @@ import {
   getMatrizDiferencias,
   getFechasStatus,
 } from "../services/StatusService";
+import { getAccuracy } from "../services/PlanogramService";
 import ColumnGraph from "../components/ColumnGraph";
 import DashboardsStyle from "../styles/DashboardsStyle.css";
 import PieGraph from "../components/PieGraph";
@@ -36,6 +37,7 @@ function DashboardPage() {
   const [matrizDiferenciaData, setMatrizDiferenciaData] = useState([]);
   const [fechasStatusData, setFechasStatusData] = useState([]);
   const [decimal, setDecimal] = useState(0);
+  const [accuracy, setAccuracy] = useState(0);
   const [promedioIntentosMalos, setPromedioIntentosMalos] = useState(0);
   const [promProdFallidosResultado, setPromProdFallidosResultado] =
     useState(null);
@@ -69,8 +71,14 @@ function DashboardPage() {
       .catch((error) => {
         console.error("Error fetching status dates: ", error);
       });
+    getAccuracy()
+      .then((data) => {
+        setAccuracy(data.avg/100);
+      })
+      .catch((error) => {
+        console.error("Error fetching accuracy: ", error);
+      });
   }, []);
-
   function formatFecha(fecha) {
     const parts = fecha.split("-");
     return `${parts[2]}/${parts[1]}`;
@@ -154,7 +162,9 @@ function DashboardPage() {
       (total, current) => total + current,
       0
     );
-    setPromProdFallidosResultado((total / matrizDiferenciaData.length).toFixed(1));
+    setPromProdFallidosResultado(
+      (total / matrizDiferenciaData.length).toFixed(1)
+    );
     return total / matrizDiferenciaData.length;
   })();
 
@@ -235,14 +245,14 @@ function DashboardPage() {
               Minutos entre el primer intento y el acomodo correcto
             </div>
             <ColumnGraph
-              data={fechasStatusData
-                .map((item) => ({
+              data={
+                fechasStatusData.map((item) => ({
                   ...item,
                   fecha: formatFecha(item.fecha),
                   timestamp: item.timestamp.toFixed(1),
                 }))
                 // .sort((a, b) => a.timestamp - b.timestamp)
-                }
+              }
               xField={"fecha"}
               yField={"timestamp"}
               color={"#8B0000"}
@@ -271,6 +281,12 @@ function DashboardPage() {
               yField={"conteo"}
               seriesField={"nombre"}
             />
+          </div>
+          <div className="dashboards-item">
+            <div className="dashboard-item-title">
+              Porcentaje de precisión del modelo
+            </div>
+            <GaugePlot data={accuracy} />
           </div>
         </div>
       </div>
