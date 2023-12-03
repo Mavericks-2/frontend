@@ -1,3 +1,25 @@
+/**
+ * @fileOverview Componente para mostrar la sección de equipo.
+ *
+ * @component  TeamSection
+ *
+ * @requires react
+ * @requires ../styles/TeamSectionStyle.css
+ * @requires ../assets/pablo-pp.jpeg
+ * @requires ../assets/angel-pp.jpeg
+ * @requires ../assets/eli-pp.jpeg
+ * @requires ../assets/gaby-pp.jpeg
+ * @requires ../assets/zay-pp.jpeg
+ * @requires ../assets/ana-pp.jpeg
+ * @requires ../assets/chema-pp.jpeg
+ * @requires ../assets/erika-pp.jpeg
+ * 
+ * @exports TeamSection
+ * 
+ * @example 
+ *  <TeamSection />
+ */
+
 import React from "react";
 import "../styles/TeamSectionStyle.css";
 import PabloPP from "../assets/pablo-pp.jpeg";

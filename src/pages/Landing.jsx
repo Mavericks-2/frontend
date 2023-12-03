@@ -1,3 +1,19 @@
+/**
+ * @fileOverview Componente que muestra la página de inicio.
+ *
+ * @component Landing
+ * 
+ * @requires react
+ * @requires ../components/TeamSection
+ * @requires ../styles/LandingStyles.css
+ * 
+ * @exports Landing
+ * 
+ * @example
+ *  <Landing />
+ * 
+ */
+
 import React, { Fragment } from "react";
 import TeamSection from "../components/TeamSection";
 import LandingStyles from "../styles/LandingStyles.css";
